@@ -2,9 +2,9 @@ namespace KindHome.Views;
 
 public static class Notice
 {
-    // Message partage pour les boutons qui n'ont pas encore de page derriere
-    public static Task ShowNotAvailableAsync()
+    // Petite fenetre partagee : sert quand l'appareil ne sait pas faire une action
+    public static Task ShowAsync(string message)
     {
-        return Shell.Current.DisplayAlertAsync("KindHome", "Cette fonction n'est pas encore disponible.", "OK");
+        return Shell.Current.DisplayAlertAsync("KindHome", message, "OK");
     }
 }

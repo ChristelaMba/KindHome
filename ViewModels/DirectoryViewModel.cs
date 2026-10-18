@@ -30,7 +30,7 @@ public class DirectoryViewModel : BaseViewModel
         ShowMapCommand = new Command(() => IsMapMode = true);
         ClearSearchCommand = new Command(() => SearchText = "");
         UseCityCommand = new Command(() => IsLocationDenied = false);
-        LocateCommand = new Command(async () => await Notice.ShowNotAvailableAsync());
+        LocateCommand = new Command(Recenter);
     }
 
     public ObservableCollection<DirectoryItem> Results { get; }
@@ -48,6 +48,9 @@ public class DirectoryViewModel : BaseViewModel
 
     // Prevenu quand un repere est choisi (la page fait defiler la liste)
     public event EventHandler<DirectoryItem>? ItemSelected;
+
+    // Prevenu quand le bouton de position est appuye
+    public event EventHandler? RecenterRequested;
 
     public string SearchText
     {
@@ -161,6 +164,13 @@ public class DirectoryViewModel : BaseViewModel
     }
 
     public DirectoryItem? Selected => selected;
+
+    // Bouton de position : retire la selection, puis la page remet la carte dans son etat de depart
+    void Recenter()
+    {
+        Select(null);
+        RecenterRequested?.Invoke(this, EventArgs.Empty);
+    }
 
     // Un repere ou une ligne : choisit l'orphelinat (repere mis en evidence, ligne visible) puis ouvre sa fiche
     async Task SelectAndOpenAsync(Orphanage? orphanage)

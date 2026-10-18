@@ -26,6 +26,7 @@ public static class MockData
         About = "Le Centre d'Espoir accueille et accompagne des enfants orphelins et en situation difficile dans un cadre familial et sécurisé.",
         Photo = "orphanage_centre_espoir.jpg", CoverPhoto = "orphanage_centre_espoir_cover.jpg",
         MapX = 172, MapY = 118,
+        Phone = "+237 6 90 00 00 01", Email = "contact@centre-espoir.example", Latitude = 4.0235, Longitude = 9.6960,
         News = new()
         {
             new NewsItem { Title = "Rentrée scolaire des enfants", Date = "12 septembre" },
@@ -41,6 +42,7 @@ public static class MockData
         About = "Les Petits Cœurs offrent un accompagnement scolaire et un suivi médical régulier à des enfants de tous âges. L'équipe veille à ce que chacun grandisse dans la confiance et le respect.",
         Photo = "orphanage_petits_coeurs.jpg", CoverPhoto = "orphanage_petits_coeurs.jpg",
         MapX = 190, MapY = 44,
+        Phone = "+237 6 90 00 00 02", Email = "contact@petits-coeurs.example", Latitude = 4.0510, Longitude = 9.7010,
         News = new()
         {
             new NewsItem { Title = "Campagne de vaccination terminée", Date = "5 septembre" },
@@ -56,6 +58,7 @@ public static class MockData
         About = "La Maison du Sourire héberge une quinzaine d'enfants dans une grande maison de quartier. Les repas, les soins et les jeux y rythment des journées simples et chaleureuses.",
         Photo = "orphanage_maison_sourire.jpg", CoverPhoto = "orphanage_maison_sourire.jpg",
         MapX = 110, MapY = 160,
+        Phone = "+237 6 90 00 00 03", Email = "contact@maison-sourire.example", Latitude = 4.0720, Longitude = 9.7330,
         News = new()
         {
             new NewsItem { Title = "Fête de fin d'année", Date = "30 août" },
@@ -71,6 +74,7 @@ public static class MockData
         About = "La Maison des Anges accompagne vingt-quatre enfants, de l'école primaire au collège. Des bénévoles viennent chaque semaine pour le soutien scolaire et les activités du week-end.",
         Photo = "orphanage_maison_anges.jpg", CoverPhoto = "orphanage_maison_anges.jpg",
         MapX = 240, MapY = 150,
+        Phone = "+237 6 90 00 00 04", Email = "contact@maison-anges.example", Latitude = 4.0210, Longitude = 9.7000,
         News = new()
         {
             new NewsItem { Title = "Atelier de lecture du samedi", Date = "9 septembre" },
@@ -86,6 +90,7 @@ public static class MockData
         About = "Espoir de Demain prépare les enfants à l'avenir grâce à l'école et à des ateliers de formation. L'orphelinat travaille main dans la main avec les enseignants du quartier.",
         Photo = "orphanage_espoir_demain.jpg", CoverPhoto = "orphanage_espoir_demain.jpg",
         MapX = 190, MapY = 196,
+        Phone = "+237 6 90 00 00 05", Email = "contact@espoir-demain.example", Latitude = 4.0480, Longitude = 9.6980,
         News = new()
         {
             new NewsItem { Title = "Résultats d'examens : bravo aux élèves", Date = "7 septembre" },
@@ -102,6 +107,7 @@ public static class MockData
         About = "Les Enfants du Soleil accueillent des enfants de 3 à 15 ans dans un cadre calme près du fleuve. La vie de groupe, le partage des tâches et le jeu y tiennent une grande place.",
         Photo = "orphanage_enfants_soleil.jpg", CoverPhoto = "orphanage_enfants_soleil.jpg",
         MapX = 66, MapY = 70,
+        Phone = "+237 6 90 00 00 06", Email = "contact@enfants-soleil.example", Latitude = 4.0620, Longitude = 9.7190,
         News = new()
         {
             new NewsItem { Title = "Un nouveau jardin potager", Date = "1 septembre" },

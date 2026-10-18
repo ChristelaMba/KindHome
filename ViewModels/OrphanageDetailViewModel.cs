@@ -18,7 +18,7 @@ public class OrphanageDetailViewModel : BaseViewModel
     {
         BackCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
         ToggleFavoriteCommand = new Command(() => IsFavorite = !IsFavorite);
-        ShareCommand = new Command(async () => await Notice.ShowNotAvailableAsync());
+        ShareCommand = new Command(async () => await DeviceActions.ShareAsync(orphanage));
         SelectTabCommand = new Command<string>(t => Tab = t);
         MessageCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(ContactPage),
             new Dictionary<string, object> { { "Orphanage", orphanage } }));

@@ -24,9 +24,9 @@ public class ContactViewModel : BaseViewModel
     public ContactViewModel()
     {
         BackCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
-        CallCommand = new Command(async () => await Notice.ShowNotAvailableAsync());
-        EmailCommand = new Command(async () => await Notice.ShowNotAvailableAsync());
-        RouteCommand = new Command(async () => await Notice.ShowNotAvailableAsync());
+        CallCommand = new Command(async () => await DeviceActions.CallAsync(orphanage));
+        EmailCommand = new Command(async () => await DeviceActions.EmailAsync(orphanage, subject));
+        RouteCommand = new Command(async () => await DeviceActions.RouteAsync(orphanage));
         SendCommand = new Command(async () => await SendAsync());
     }
 

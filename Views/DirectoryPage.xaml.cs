@@ -25,6 +25,11 @@ public partial class DirectoryPage : ContentPage
         BuildPins();
         viewModel.ResultsChanged += (s, e) => UpdatePins();
         viewModel.ItemSelected += OnItemSelected;
+        viewModel.RecenterRequested += (s, e) =>
+        {
+            UpdatePins();
+            UpdateMapLayout();
+        };
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
         MapArea.SizeChanged += (s, e) => UpdateMapLayout();
         UpdatePins();

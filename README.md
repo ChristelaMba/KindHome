@@ -68,14 +68,14 @@ Ces valeurs servent a montrer les differents etats a l'enseignant. StartRoute va
 | SimulateSendFailure | true : l'envoi d'un don, d'une candidature, d'un message de contact ou d'un besoin publie echoue apres une seconde. |
 | SimulateNoOrgNeeds | true : les besoins de depart de la Maison des Anges sont masques ("Aucun besoin publie") ; les besoins publies pendant la session restent affiches. |
 
-## Boutons encore en attente
+## Actions de l'appareil
 
-Ils sont dessines comme dans la maquette et, au clic, ouvrent la fenetre "Cette fonction n'est pas encore disponible." (une seule methode partagee) :
-- Partager, sur la fiche d'un orphelinat.
-- Appeler, E-mail et Itineraire, sur la page Contacter l'orphelinat.
-- Le bouton de position (viseur) de la carte de l'annuaire.
+Plus aucun bouton n'est en attente. Les telephones, e-mails et coordonnees des orphelinats sont des exemples.
+- Partager (fiche d'un orphelinat) : ouvre la feuille de partage du systeme avec un court texte.
+- Appeler, E-mail et Itineraire (page Contacter l'orphelinat) : ouvrent le composeur, la messagerie (avec l'objet choisi) et l'application de cartes. Si l'appareil n'a pas l'application, une petite fenetre l'indique.
+- Bouton de position (viseur) de la carte de l'annuaire : retire la selection du repere et remet la carte dans son etat de depart (aucune vraie localisation).
 
 ## Ce qui reste a faire
 
 - Le back-end : comptes, orphelinats, besoins, dons, candidatures, messages et notifications sont aujourd'hui des donnees d'exemple dans Data/MockData.cs et en memoire. Aucun envoi n'est reel et rien n'est conserve apres la fermeture.
-- Les actions de l'appareil : appel telephonique, e-mail, itineraire, partage, vraie localisation et vraie carte (les boutons ci-dessus).
+- La vraie localisation et une vraie carte (le bouton de position ne fait que recentrer le dessin).

@@ -26,6 +26,12 @@ public class Orphanage
     // Actualites affichees dans l'onglet "Actualites" de la fiche
     public List<NewsItem> News { get; set; } = new();
 
+    // Coordonnees d'exemple (approximatives, selon le quartier)
+    public string Phone { get; set; } = "";
+    public string Email { get; set; } = "";
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+
     // Position du repere sur la carte dessinee : valeurs "translate" du HTML (carte de 390 x 252)
     public double MapX { get; set; }
     public double MapY { get; set; }
