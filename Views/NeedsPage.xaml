@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.NeedsPage"
+             x:DataType="vm:NeedsViewModel"
+             Title="Besoins"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <!-- Contenu : respecte la barre d'etat en haut -->
+        <Grid Grid.Row="0"
+              RowDefinitions="Auto,*"
+              SafeAreaEdges="Container,Container,Container,None">
+
+            <!-- Barre du haut -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="Auto,*"
+                  ColumnSpacing="4"
+                  Padding="14,0,20,0">
+                <ImageButton Grid.Column="0"
+                             Source="icon_arrow_left.png"
+                             Padding="10"
+                             Command="{Binding BackCommand}"
+                             SemanticProperties.Description="Retour" />
+                <Label Grid.Column="1"
+                       Text="Besoins"
+                       Style="{StaticResource TopBarTitle}" />
+            </Grid>
+
+            <!-- Pas de connexion -->
+            <VerticalStackLayout Grid.Row="1"
+                                 VerticalOptions="Center"
+                                 Spacing="12"
+                                 IsVisible="{Binding IsNetworkError}">
+                <components:EmptyState Icon="icon_wifi_off.png"
+                                       IsError="True"
+                                       Title="Pas de connexion"
+                                       Message="Vérifiez votre réseau puis réessayez. Les dernières données enregistrées restent consultables."
+                                       ButtonText="Réessayer"
+                                       Command="{Binding RetryCommand}" />
+                <Button Style="{StaticResource TextButton}"
+                        Text="Voir les données enregistrées"
+                        HorizontalOptions="Center"
+                        Command="{Binding ShowSavedCommand}" />
+            </VerticalStackLayout>
+
+            <!-- Filtres et liste -->
+            <Grid Grid.Row="1"
+                  RowDefinitions="Auto,*"
+                  IsVisible="{Binding ShowMain}">
+
+                <!-- Puces sur deux lignes : chaque puce a 8 de marge a droite et en bas -->
+                <FlexLayout Grid.Row="0"
+                            Margin="20,8,12,0"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            AlignItems="Start"
+                            JustifyContent="Start"
+                            BindableLayout.ItemsSource="{Binding Filters}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:NeedFilter">
+                            <components:ChoiceChip Margin="0,0,4,4"
+                                                   Text="{Binding Name}"
+                                                   IsSelected="{Binding IsSelected}"
+                                                   CommandParameter="{Binding .}"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NeedsViewModel}}, Path=SelectFilterCommand}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+
+                <!-- Liste des besoins : defile au-dessus de la barre d'onglets -->
+                <ScrollView Grid.Row="1" IsVisible="{Binding ShowList}">
+                    <VerticalStackLayout Padding="20,12,20,24">
+                        <Label Text="Besoins prioritaires"
+                               Style="{StaticResource SectionTitle}"
+                               Margin="0,0,0,10" />
+                        <VerticalStackLayout Spacing="12"
+                                             BindableLayout.ItemsSource="{Binding Needs}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:Need">
+                                    <components:NeedCard Need="{Binding .}"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NeedsViewModel}}, Path=OpenNeedCommand}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- Aucun besoin pour ce filtre -->
+                <components:EmptyState Grid.Row="1"
+                                       VerticalOptions="Center"
+                                       Icon="icon_bag_empty.png"
+                                       Title="Aucun besoin pour le moment"
+                                       Message="Les orphelinats n'ont pas encore publié de besoins. Revenez bientôt ou changez de filtre."
+                                       ButtonText="Réinitialiser les filtres"
+                                       SecondaryAction="True"
+                                       Command="{Binding ResetFiltersCommand}"
+                                       IsVisible="{Binding ShowEmpty}" />
+            </Grid>
+        </Grid>
+
+        <components:DonorTabBar Grid.Row="1" ActiveTab="Needs" />
+    </Grid>
+</ContentPage>

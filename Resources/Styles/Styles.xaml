@@ -1,0 +1,1594 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Valeurs releves dans la maquette HTML (cadre 390 x 844, 1 unite CSS = 1 unite MAUI). -->
+
+    <!-- ===== Polices : Inter. Les alias seront declares dans MauiProgram quand les fichiers seront dans Resources/Fonts ===== -->
+    <x:String x:Key="FontRegular">InterRegular</x:String>
+    <x:String x:Key="FontMedium">InterMedium</x:String>
+    <x:String x:Key="FontSemiBold">InterSemiBold</x:String>
+    <x:String x:Key="FontBold">InterBold</x:String>
+
+    <!-- ===== Marges des champs et de la barre d'onglets ===== -->
+    <Thickness x:Key="FieldPadding">18,0</Thickness>
+    <Thickness x:Key="FieldPaddingWithButton">18,0,6,0</Thickness>
+    <Thickness x:Key="FieldPaddingWithIcon">18,0,16,0</Thickness>
+    <Thickness x:Key="TabBarPadding">12,8,12,20</Thickness>
+    <Thickness x:Key="TabBarPaddingOrganization">8,8,8,20</Thickness>
+
+    <!-- ===== Page, Shell ===== -->
+    <Style TargetType="Page" ApplyToDerivedTypes="True">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource PageBackground}" />
+    </Style>
+
+    <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource PageBackground}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource GlassSurface90}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <!-- ===== Textes ===== -->
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- LineHeight MAUI = hauteur de ligne CSS / taille de police -->
+    <Style TargetType="Label" x:Key="OnboardingTitle">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="LineHeight" Value="1.2" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="OnboardingText">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDarkSoft}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.5" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BrandName">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="LineHeight" Value="1.153846" />
+        <Setter Property="CharacterSpacing" Value="-0.2" />
+    </Style>
+
+    <!-- Logo sur fond sombre (onboarding) : texte blanc, slogan a 92% -->
+    <Style TargetType="Label" x:Key="BrandNameOnDark" BasedOn="{StaticResource BrandName}">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BrandTaglineOnDark">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="LineHeight" Value="1.384615" />
+        <Setter Property="Opacity" Value="0.92" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BrandTagline">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="Heading1">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="LineHeight" Value="1.230769" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="Heading2">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="LineHeight" Value="1.25" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TopBarTitle">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="LineHeight" Value="1.272727" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TopBarTitleSmall">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="LineHeight" Value="1.4" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="OrganizationName">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="LineHeight" Value="1.333333" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SectionTitle">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="FieldLabel">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="Subtitle">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="LineHeight" Value="1.466667" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BodyText">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.571429" />
+    </Style>
+
+    <!-- Role sous le nom du profil : 14. Lieu : 13, vert -->
+    <Style TargetType="Label" x:Key="ProfileRole">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LocationGreen">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Texte de l'encadre "Mon impact" : 14 / 21, #3C554B -->
+    <Style TargetType="Label" x:Key="ImpactText">
+        <Setter Property="TextColor" Value="{StaticResource TextSoft}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Morceaux du texte "Mon impact" : sans police explicite, Android prend la police du systeme -->
+    <Style TargetType="Span" x:Key="ImpactSpan">
+        <Setter Property="TextColor" Value="{StaticResource TextSoft}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="Span" x:Key="ImpactSpanBold" BasedOn="{StaticResource ImpactSpan}">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+    </Style>
+
+    <!-- "Vue d'ensemble" : 15 semi-gras -->
+    <Style TargetType="Label" x:Key="OverviewTitle">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <!-- "Bonjour," de l'accueil : 14 / 18 -->
+    <Style TargetType="Label" x:Key="GreetingSmall">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.285714" />
+    </Style>
+
+    <!-- Texte du champ de recherche (non modifiable) : 15, gris du texte d'aide -->
+    <Style TargetType="Label" x:Key="SearchPlaceholder">
+        <Setter Property="TextColor" Value="{StaticResource PlaceholderGray}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+    </Style>
+
+    <!-- Textes de la grande carte "Besoin en cours" : nom 20 / 26 semi-gras, lignes 13, tout en blanc -->
+    <Style TargetType="Label" x:Key="FeaturedTitle">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="LineHeight" Value="1.3" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="FeaturedMeta">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Nom de la ville sur la carte dessinee : 14 semi-gras, #3C554B -->
+    <Style TargetType="Label" x:Key="MapLabel">
+        <Setter Property="TextColor" Value="{StaticResource TextSoft}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- Valeur en gras d'une ligne d'information (32 enfants, 4,6) : 14 semi-gras -->
+    <Style TargetType="Label" x:Key="InfoBold">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- "Structure verifiee" : 13 semi-gras, vert -->
+    <Style TargetType="Label" x:Key="VerifiedLabel">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Onglets de la fiche (A propos, Besoins, Actualites) : 14, normal en moyen gris, actif en semi-gras vert fonce -->
+    <Style TargetType="Label" x:Key="DetailTab">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="DetailTabActive" BasedOn="{StaticResource DetailTab}">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+    </Style>
+
+    <!-- Selecteur Liste / Carte : bouton dans le bandeau, hauteur libre (44), coins 22, texte 14 -->
+    <Style TargetType="Button" x:Key="SegmentButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="22" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="SegmentButtonSelected" BasedOn="{StaticResource SegmentButton}">
+        <Setter Property="Background" Value="{StaticResource PrimaryGradientBrush}" />
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+    </Style>
+
+    <!-- Sous-titre 14 / 20 (page Inscription) -->
+    <Style TargetType="Label" x:Key="SubtitleSmall">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.428571" />
+    </Style>
+
+    <!-- Texte des encadres d'information : 14 / 20, vert fonce ; version titre en semi-gras -->
+    <Style TargetType="Label" x:Key="NoticeText">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.428571" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="NoticeTitle" BasedOn="{StaticResource NoticeText}">
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+    </Style>
+
+    <!-- Prefixe fixe du champ telephone ("+237") : 16 semi-gras -->
+    <Style TargetType="Label" x:Key="FieldPrefix">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Texte d'une case a cocher : 14 / 20, #3C554B ; grise quand la case est desactivee -->
+    <Style TargetType="Label" x:Key="CheckBoxText">
+        <Setter Property="TextColor" Value="{StaticResource TextSoft}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.428571" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource TextDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Label" x:Key="Caption">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CaptionSmall">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="ErrorText">
+        <Setter Property="TextColor" Value="{StaticResource ErrorRed}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="LineHeight" Value="1.384615" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="HintText">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="LineHeight" Value="1.384615" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CardTitle">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CardTitleSmall">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CardSubtitle">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="MetaGreen">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="StatNumber">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="LineHeight" Value="1.181818" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="StatLabel">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.333333" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LinkText">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LinkTextBold">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LinkMuted">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="StateTitle">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="StateText">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TabLabel">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TabLabelActive" BasedOn="{StaticResource TabLabel}">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="QuantityValue">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CharCounter">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
+    </Style>
+
+    <!-- ===== Boutons ===== -->
+    <!-- Bouton principal : degrade vert, hauteur 52, coins 26, texte blanc 16 semi-gras, ombre 0 8 16 vert a 25% -->
+    <Style TargetType="Button" x:Key="PrimaryButton">
+        <Setter Property="Background" Value="{StaticResource PrimaryGradientBrush}" />
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="CornerRadius" Value="26" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,8" Radius="16" Opacity="0.25" />
+        </Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <!-- Etat "Actif" de la maquette : fond vert fonce -->
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource DeepGreenBrush}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource DisabledButtonBrush}" />
+                            <Setter Property="TextColor" Value="{StaticResource TextDisabled}" />
+                            <Setter Property="Shadow" Value="{x:Null}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Bouton principal sur fond sombre (onboarding) : contour blanc a 25%, ombre 0 8 18 noir a 18% -->
+    <Style TargetType="Button" x:Key="PrimaryButtonOnDark" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="BorderColor" Value="{StaticResource OnboardingButtonBorder}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowBlackBrush}" Offset="0,8" Radius="18" Opacity="0.18" />
+        </Setter>
+    </Style>
+
+    <!-- Envoi en cours : bouton principal a 75% d'opacite, icone ronde fixe a gauche du texte -->
+    <Style TargetType="Button" x:Key="PrimaryButtonBusy" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="Opacity" Value="0.75" />
+        <!-- Pas d'ombre pendant l'envoi (sur Android elle devient carree avec l'opacite) -->
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,0" Radius="0" Opacity="0" />
+        </Setter>
+    </Style>
+
+    <!-- Variante hauteur 48, texte 15 (boutons des etats vides) -->
+    <Style TargetType="Button" x:Key="PrimaryButtonCompact" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="CornerRadius" Value="24" />
+        <Setter Property="Padding" Value="28,0" />
+    </Style>
+
+    <!-- Bouton "Reessayer" de l'etat Pas de connexion : comme le compact, avec 32 de marge de chaque cote -->
+    <Style TargetType="Button" x:Key="PrimaryButtonCompactWide" BasedOn="{StaticResource PrimaryButtonCompact}">
+        <Setter Property="Padding" Value="32,0" />
+    </Style>
+
+    <!-- Deux boutons cote a cote (detail du besoin) : hauteur 52, texte 15 -->
+    <Style TargetType="Button" x:Key="PrimaryButtonSplit" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <!-- Bouton secondaire : contour vert 1.5, fond transparent, texte vert fonce -->
+    <Style TargetType="Button" x:Key="SecondaryButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource GreenGradientStart}" />
+        <Setter Property="BorderWidth" Value="1.5" />
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="CornerRadius" Value="26" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource SoftGreenBackground}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BorderColor" Value="{StaticResource BorderDisabled}" />
+                            <Setter Property="TextColor" Value="{StaticResource TextDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Etat erreur du bouton secondaire : contour et texte rouges -->
+    <Style TargetType="Button" x:Key="SecondaryButtonError" BasedOn="{StaticResource SecondaryButton}">
+        <Setter Property="BorderColor" Value="{StaticResource ErrorRed}" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorRed}" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="SecondaryButtonCompact" BasedOn="{StaticResource SecondaryButton}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="CornerRadius" Value="24" />
+        <Setter Property="Padding" Value="28,0" />
+    </Style>
+
+    <!-- Deux boutons cote a cote (detail du besoin) : hauteur 52, texte 15 -->
+    <Style TargetType="Button" x:Key="SecondaryButtonSplit" BasedOn="{StaticResource SecondaryButton}">
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <!-- Bouton d'erreur (reessayer) : fond rose, contour rouge 1.5, texte rouge 15 semi-gras, hauteur 48 -->
+    <Style TargetType="Button" x:Key="ErrorButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource ErrorBackground}" />
+        <Setter Property="BorderColor" Value="{StaticResource ErrorRed}" />
+        <Setter Property="BorderWidth" Value="1.5" />
+        <Setter Property="TextColor" Value="{StaticResource ErrorRed}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="CornerRadius" Value="24" />
+        <Setter Property="Padding" Value="28,0" />
+    </Style>
+
+    <!-- Lien-bouton : texte vert 14 semi-gras, zone tactile 44 -->
+    <Style TargetType="Button" x:Key="TextButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <!-- Puce de choix : hauteur 44, coins 22, texte 14 moyen, marge 20. Etats : CommonStates (Disabled) et ChipStates (Unselected, Selected, Error) -->
+    <Style TargetType="Button" x:Key="ChipButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource ChipBackground}" />
+        <Setter Property="TextColor" Value="{StaticResource TextSoft}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="CornerRadius" Value="22" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="20,0" />
+<Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource DisabledFieldBackground}" />
+                            <Setter Property="TextColor" Value="{StaticResource TextDisabledChip}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="ChipStates">
+                    <VisualState x:Name="Unselected" />
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="Background" Value="{StaticResource PrimaryGradientBrush}" />
+                            <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+                            <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+                            <Setter Property="Shadow">
+                                <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="12" Opacity="0.22" />
+                            </Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Error">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+                            <Setter Property="BorderColor" Value="{StaticResource ErrorRed}" />
+                            <Setter Property="BorderWidth" Value="1.5" />
+                            <Setter Property="TextColor" Value="{StaticResource ErrorRed}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Texte invisible qui donne sa largeur a une puce : Android mesure mal le texte d'un Button (derniere lettre coupee) -->
+    <Style TargetType="Label" x:Key="ChipSizerLabel">
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="InputTransparent" Value="True" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+    <!-- Puce avec 18 de marge de chaque cote du texte (domaines d'aide) -->
+    <Style TargetType="Button" x:Key="ChipButtonTight" BasedOn="{StaticResource ChipButton}">
+        <Setter Property="Padding" Value="18,0" />
+    </Style>
+
+    <!-- Puce de jour (Lun, Mar...) : largeur 43, texte 13 -->
+    <Style TargetType="Button" x:Key="DayChipButton" BasedOn="{StaticResource ChipButton}">
+        <Setter Property="WidthRequest" Value="43" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <!-- Bouton rond sur photo (retour, coeur, partager) : 44 x 44, fond blanc a 88%, ombre 0 4 12 noir a 12% -->
+    <Style TargetType="ImageButton" x:Key="OverlayRoundButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource OverlayButtonBackground}" />
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="CornerRadius" Value="22" />
+        <Setter Property="Padding" Value="11" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowBlackBrush}" Offset="0,4" Radius="12" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <!-- Bouton-icone transparent (fleche retour, cloche, reglages, oeil) : zone tactile 44 x 44 -->
+    <Style TargetType="ImageButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="BorderColor" Value="Transparent"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="WidthRequest" Value="44"/>
+        <Setter Property="HeightRequest" Value="44"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- ===== Champs de saisie ===== -->
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderGray}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource TextDisabled}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Champ de recherche : texte 15 -->
+    <Style TargetType="Entry" x:Key="SearchEntry">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderGray}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderGray}" />
+    </Style>
+
+    <Style TargetType="Picker">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="TitleColor" Value="{StaticResource PlaceholderGray}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style TargetType="DatePicker">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <!-- Cadre d'un champ : hauteur 52, coins 26, contour 1.5, fond blanc casse, ombre 0 4 12 vert a 6%.
+         Etats (groupe FieldStates) : Normal, Active, Disabled, Error. -->
+    <Style TargetType="Border" x:Key="FieldBorder">
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="26" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{StaticResource BorderField}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Padding" Value="18,0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,4" Radius="12" Opacity="0.06" />
+        </Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="FieldStates">
+                    <VisualState x:Name="Normal" />
+                    <!-- Valide : contour vert 1.5 (champ correct, avec la coche a droite) -->
+                    <VisualState x:Name="Valid">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource GreenGradientStart}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <!-- Actif : contour 2 vert, avec l'anneau FieldRing autour -->
+                    <VisualState x:Name="Active">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource PrimaryGreen}" />
+                            <Setter Property="StrokeThickness" Value="2" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource BorderDisabled}" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource DisabledFieldBackground}" />
+                            <Setter Property="Shadow">
+                                <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,4" Radius="12" Opacity="0" />
+                            </Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Error">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource ErrorRed}" />
+                            <Setter Property="Shadow">
+                                <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,4" Radius="12" Opacity="0" />
+                            </Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Anneau de focus autour d'un champ : 4 de large, #D3E6DB, visible seulement a l'etat Active. Il deborde du champ (marge -4). -->
+    <Style TargetType="Border" x:Key="FieldRing">
+        <Setter Property="Margin" Value="-4" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="30" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="FieldStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Active">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource FocusRing}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Valid" />
+                    <VisualState x:Name="Disabled" />
+                    <VisualState x:Name="Error" />
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Champ de recherche : hauteur 48, coins 24, fond blanc casse a 92%, contour blanc a 80%, ombre 0 6 16 vert a 8% -->
+    <Style TargetType="Border" x:Key="SearchBarBorder">
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="24" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{StaticResource GlassBorder80}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSurface92}" />
+        <Setter Property="Padding" Value="18,0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="16" Opacity="0.08" />
+        </Setter>
+    </Style>
+
+    <!-- Zone de texte multiligne : coins 20, contour 1.5, texte 16. Hauteurs : 60 (message du don), 76 (motivation), 128 (message de contact) -->
+    <Style TargetType="Border" x:Key="TextAreaBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="20" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{StaticResource BorderField}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Padding" Value="18,12" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,4" Radius="12" Opacity="0.06" />
+        </Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="FieldStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Error">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource ErrorRed}" />
+                            <Setter Property="Shadow">
+                                <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,4" Radius="12" Opacity="0" />
+                            </Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Option de remise (bouton radio en forme de pilule) : hauteur mini 48, coins 24 -->
+    <Style TargetType="Border" x:Key="RadioOptionBorder">
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="24" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{StaticResource BorderField}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Padding" Value="18,0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource GreenGradientStart}" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource SoftGreenBackground}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Case a cocher dessinee : 22 x 22, coins 7, contour 2. Etats : Normal, Checked, Disabled, Error -->
+    <Style TargetType="Border" x:Key="CheckBoxBox">
+        <Setter Property="WidthRequest" Value="22" />
+        <Setter Property="HeightRequest" Value="22" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="7" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="{StaticResource CheckboxBorder}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CheckStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Checked">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource PrimaryGreen}" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryGreen}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource BorderDisabled}" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource DisabledFieldBackground}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Error">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource ErrorRed}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="Color" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="MinimumHeightRequest" Value="44"/>
+        <Setter Property="MinimumWidthRequest" Value="44"/>
+    </Style>
+
+    <Style TargetType="RadioButton">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontRegular}"/>
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+
+    <!-- ===== Cartes ===== -->
+    <!-- Carte : coins 22, fond blanc casse, padding 12, ombre 0 6 18 vert a 8% (une 2e ombre 0 1 3 a 6% existe dans la maquette) -->
+    <Style TargetType="Border" x:Key="CardBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="22" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="18" Opacity="0.08" />
+        </Setter>
+    </Style>
+
+    <!-- Grande carte "Besoin en cours" : hauteur 214, coins 24, fond vert fonce, ombre 0 10 24 vert a 16% -->
+    <Style TargetType="Border" x:Key="FeaturedCardBorder">
+        <Setter Property="HeightRequest" Value="214" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="24" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,10" Radius="24" Opacity="0.16" />
+        </Setter>
+    </Style>
+
+    <!-- Ligne du besoin dans la grande carte : hauteur 64, coins 18, fond blanc casse a 92%, ombre 0 6 16 noir a 12% -->
+    <Style TargetType="Border" x:Key="FeaturedNeedBorder">
+        <Setter Property="HeightRequest" Value="64" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="18" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSurface92}" />
+        <Setter Property="Padding" Value="10,0,14,0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowBlackBrush}" Offset="0,6" Radius="16" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <!-- Barre d'onglets du donateur : fond blanc casse a 90%, ombre 0 -6 18 vert a 7%. Le flou d'arriere-plan n'est pas reproduit. -->
+    <Style TargetType="Border" x:Key="TabBarBorder">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSurface90}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,-6" Radius="18" Opacity="0.07" />
+        </Setter>
+    </Style>
+
+    <!-- Carte d'orphelinat de l'accueil : coins 20, padding 6 -->
+    <Style TargetType="Border" x:Key="OrphanageCardBorder" BasedOn="{StaticResource CardBorder}">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="20" />
+        </Setter>
+        <Setter Property="Padding" Value="6" />
+    </Style>
+
+    <!-- Carte de chiffres du profil : hauteur 88, coins 20, fond blanc casse a 85%, contour blanc a 90%, ombre 0 6 16 vert a 8% -->
+    <Style TargetType="Border" x:Key="StatCardBorder">
+        <Setter Property="HeightRequest" Value="88" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="20" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{StaticResource GlassBorder90}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSurface85}" />
+        <Setter Property="Padding" Value="6,0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="16" Opacity="0.08" />
+        </Setter>
+    </Style>
+
+    <!-- Bloc "Vue d'ensemble" de l'organisation : coins 22, fond vert clair a 90%, contour blanc a 90%, ombre 0 6 16 vert a 6% -->
+    <Style TargetType="Border" x:Key="OverviewCardBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="22" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{StaticResource GlassBorder90}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSoftGreen90}" />
+        <Setter Property="Padding" Value="8,16,8,14" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="16" Opacity="0.06" />
+        </Setter>
+    </Style>
+
+    <!-- ===== Page Proposer un don et Merci pour votre don ===== -->
+    <!-- Bouton de quantite (- et +) : 48 rond, contour 1.5. Normal (-) : gris. Actif (+) : vert. Desactive : gris clair -->
+    <Style TargetType="Border" x:Key="QuantityButtonBorder">
+        <Setter Property="WidthRequest" Value="48" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="24" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{StaticResource BorderField}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="QuantityButtonBorderActive" BasedOn="{StaticResource QuantityButtonBorder}">
+        <Setter Property="Stroke" Value="{StaticResource GreenGradientStart}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="QuantityButtonBorderDisabled" BasedOn="{StaticResource QuantityButtonBorder}">
+        <Setter Property="Stroke" Value="{StaticResource BorderDisabled}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource DisabledFieldBackground}" />
+    </Style>
+
+    <!-- Texte d'une option radio : 15, moyen ; choisie : semi-gras vert fonce -->
+    <Style TargetType="Label" x:Key="RadioLabel">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="RadioLabelSelected" BasedOn="{StaticResource RadioLabel}">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+    </Style>
+
+    <!-- Cercle de l'option radio : 20, contour 1.5 gris ; choisie : contour 2 vert et point de 10 -->
+    <Style TargetType="Border" x:Key="RadioRing">
+        <Setter Property="WidthRequest" Value="20" />
+        <Setter Property="HeightRequest" Value="20" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="10" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{StaticResource CheckboxBorder}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="RadioRingSelected" BasedOn="{StaticResource RadioRing}">
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="{StaticResource PrimaryGreen}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="RadioDot">
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="5" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryGreen}" />
+    </Style>
+
+    <!-- Texte du bandeau d'erreur : 14 / 20, rouge fonce -->
+    <Style TargetType="Label" x:Key="ErrorBannerText">
+        <Setter Property="TextColor" Value="{StaticResource ErrorTextDark}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.428571" />
+    </Style>
+
+    <!-- Texte de l'encadre "Prochaine etape" : 13 / 19 -->
+    <Style TargetType="Label" x:Key="NextStepText">
+        <Setter Property="TextColor" Value="{StaticResource TextSoft}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="LineHeight" Value="1.461538" />
+    </Style>
+
+    <!-- Lignes du recapitulatif du don : libelle gris 14, valeur semi-gras vert fonce 14, hauteur mini 48 -->
+    <Style TargetType="Label" x:Key="SummaryLabel">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SummaryValue">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
+    </Style>
+
+    <!-- Texte d'un champ a l'ecran (date choisie) : 16 ; sans valeur : gris du texte d'aide -->
+    <Style TargetType="Label" x:Key="FieldValueText">
+        <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="FieldPlaceholderText" BasedOn="{StaticResource FieldValueText}">
+        <Setter Property="TextColor" Value="{StaticResource PlaceholderGray}" />
+    </Style>
+    <!-- Petit texte sous la case de la charte : 12 / 18 -->
+    <Style TargetType="Label" x:Key="CheckHintText">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.5" />
+    </Style>
+
+    <!-- Message d'erreur sous un groupe de puces : 13 / 18, retrait de 6 -->
+    <Style TargetType="Label" x:Key="ChipGroupError" BasedOn="{StaticResource ErrorText}">
+        <Setter Property="Margin" Value="6,4,0,0" />
+    </Style>
+
+    <!-- ===== Page Contacter l'orphelinat ===== -->
+    <!-- Rond avec la maison et le coeur : 52, blanc pur, ombre 0 4 12 vert a 12% -->
+    <Style TargetType="Border" x:Key="ContactLogoCircle">
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="26" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+    </Style>
+
+    <!-- Carte d'action (Appeler, E-mail, Itineraire) : hauteur 80, comme une carte sans marge interieure -->
+    <Style TargetType="Border" x:Key="ActionCardBorder" BasedOn="{StaticResource CardBorder}">
+        <Setter Property="HeightRequest" Value="80" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="ActionCardLabel">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+    <!-- ===== Pages Mon historique, Reglages, Notifications ===== -->
+    <!-- Interrupteur aux couleurs du projet -->
+    <Style TargetType="Switch">
+        <Setter Property="OnColor" Value="{StaticResource PrimaryGreen}" />
+    </Style>
+
+    <!-- Point vert d'une notification non lue : 10, rond -->
+    <Style TargetType="Border" x:Key="UnreadDot">
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="5" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryGreen}" />
+    </Style>
+    <!-- Bloc d'information (conseil, prochaine etape, succes) : coins 20, fond vert clair, marge 16 / 14 -->
+    <Style TargetType="Border" x:Key="NoticeBoxBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="20" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SoftGreenBackground}" />
+        <Setter Property="Padding" Value="16,14" />
+    </Style>
+
+    <!-- Encadre d'information (Mon impact, Prochaine etape) : fond vert clair, sans ombre -->
+    <Style TargetType="Border" x:Key="InfoBoxBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="22" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SoftGreenBackground}" />
+        <Setter Property="Padding" Value="18,16" />
+    </Style>
+
+    <!-- Message d'erreur en haut d'un formulaire : coins 20, contour rouge 1.5, fond rose -->
+    <Style TargetType="Border" x:Key="ErrorBannerBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="20" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{StaticResource ErrorRed}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ErrorBackground}" />
+        <Setter Property="Padding" Value="14,12" />
+    </Style>
+
+    <!-- Bandeau Liste / Carte : hauteur 52, coins 26, padding 4, fond blanc casse a 85%, contour blanc a 80%, ombre 0 8 20 vert a 12% -->
+    <Style TargetType="Border" x:Key="SegmentedBorder">
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="26" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{StaticResource GlassBorder80}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSurface85}" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,8" Radius="20" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <!-- Feuille de la liste de l'annuaire : coins hauts 24, fond blanc casse, ombre 0 -8 20 vert a 8% -->
+    <Style TargetType="Border" x:Key="ListSheetBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="24,24,0,0" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Padding" Value="20,8,20,0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,-8" Radius="20" Opacity="0.08" />
+        </Setter>
+    </Style>
+
+    <!-- Panneau blanc cassé sous la photo (fiche et detail du besoin) : coins hauts 28, fond de page -->
+    <Style TargetType="Border" x:Key="PhotoSheetBorder">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="28,28,0,0" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PageBackground}" />
+    </Style>
+
+    <!-- ===== Puces d'information (non cliquables) ===== -->
+    <!-- Etiquette de categorie : hauteur 32, coins 16, fond vert tres clair, texte 13 moyen -->
+    <Style TargetType="Border" x:Key="TagBorder">
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="16" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource TagBackground}" />
+        <Setter Property="Padding" Value="14,0" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="TagLabel">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontMedium}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Pastille de lieu : hauteur 34, coins 17, texte 13 semi-gras -->
+    <Style TargetType="Border" x:Key="LocationPillBorder" BasedOn="{StaticResource TagBorder}">
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="17" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="Label" x:Key="LocationPillLabel" BasedOn="{StaticResource TagLabel}">
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+    </Style>
+
+    <!-- Badge sur photo ("Besoin en cours") : hauteur 28, coins 14, fond blanc a 22%, contour blanc a 40%, texte 12 semi-gras blanc -->
+    <Style TargetType="Border" x:Key="PhotoBadgeBorder">
+        <Setter Property="HeightRequest" Value="28" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="14" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{StaticResource WhiteBadgeBorder}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource WhiteBadgeBackground}" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="PhotoBadgeLabel">
+        <Setter Property="TextColor" Value="{StaticResource TextOnDark}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontSemiBold}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Points de la page d'accueil (onboarding) : actif 20 x 6 blanc, inactif 6 x 6 blanc a 45% -->
+    <Style TargetType="Border" x:Key="PageDotActive">
+        <Setter Property="WidthRequest" Value="20" />
+        <Setter Property="HeightRequest" Value="6" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="3" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource White}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="PageDot" BasedOn="{StaticResource PageDotActive}">
+        <Setter Property="WidthRequest" Value="6" />
+        <Setter Property="BackgroundColor" Value="{StaticResource WhiteDotInactive}" />
+    </Style>
+
+    <!-- ===== Barres de progression (dessinees avec deux Border : fond + remplissage) ===== -->
+    <!-- Liste : 6 / coins 3. Proposer un don : 8 / coins 4. Detail du besoin : 10 / coins 5 avec degrade -->
+    <Style TargetType="Border" x:Key="ProgressTrackSmall">
+        <Setter Property="HeightRequest" Value="6" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="3" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ProgressTrack}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="ProgressTrackMedium" BasedOn="{StaticResource ProgressTrackSmall}">
+        <Setter Property="HeightRequest" Value="8" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="4" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="ProgressTrackLarge" BasedOn="{StaticResource ProgressTrackSmall}">
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="5" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="ProgressFillSmall">
+        <Setter Property="HeightRequest" Value="6" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="3" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryGreen}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="ProgressFillMedium" BasedOn="{StaticResource ProgressFillSmall}">
+        <Setter Property="HeightRequest" Value="8" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="4" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="ProgressFillLarge" BasedOn="{StaticResource ProgressFillSmall}">
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="Background" Value="{StaticResource PrimaryGradientBrush}" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="5" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="ProgressBar">
+        <Setter Property="ProgressColor" Value="{StaticResource PrimaryGreen}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ProgressTrack}" />
+    </Style>
+
+    <!-- ===== Icones dans des tuiles ou cercles ===== -->
+    <!-- Tuile d'icone : 64 x 64 (don), coins 16, fond vert pale ; version 52 x 56 coins 14 dans l'espace organisation -->
+    <Style TargetType="Border" x:Key="IconTileBorder">
+        <Setter Property="WidthRequest" Value="64" />
+        <Setter Property="HeightRequest" Value="64" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="16" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource IconTileBackground}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="IconTileSmallBorder" BasedOn="{StaticResource IconTileBorder}">
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="14" />
+        </Setter>
+    </Style>
+
+    <!-- Cercle d'icone de la page Mot de passe oublie : 84, fond vert tres clair, ombre 0 8 20 vert a 12% -->
+    <Style TargetType="Border" x:Key="FeatureIconCircle">
+        <Setter Property="WidthRequest" Value="84" />
+        <Setter Property="HeightRequest" Value="84" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="42" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource TagBackground}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,8" Radius="20" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <!-- Cercle d'icone des etats vides : 96, fond vert tres clair, ombre 0 8 20 vert a 12% -->
+    <Style TargetType="Border" x:Key="StateIconCircle">
+        <Setter Property="WidthRequest" Value="96" />
+        <Setter Property="HeightRequest" Value="96" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="48" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource TagBackground}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,8" Radius="20" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border" x:Key="StateIconCircleError" BasedOn="{StaticResource StateIconCircle}">
+        <Setter Property="BackgroundColor" Value="{StaticResource ErrorBackground}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowRedBrush}" Offset="0,8" Radius="20" Opacity="0.12" />
+        </Setter>
+    </Style>
+
+    <!-- Cercle de succes : exterieur 112 (fond vert tres clair), interieur 80 (degrade diagonal, ombre 0 10 22 vert a 30%) -->
+    <Style TargetType="Border" x:Key="SuccessCircleOuter">
+        <Setter Property="WidthRequest" Value="112" />
+        <Setter Property="HeightRequest" Value="112" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="56" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource TagBackground}" />
+    </Style>
+
+    <Style TargetType="Border" x:Key="SuccessCircleInner">
+        <Setter Property="WidthRequest" Value="80" />
+        <Setter Property="HeightRequest" Value="80" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="40" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="Background" Value="{StaticResource PrimaryGradientDiagonalBrush}" />
+    </Style>
+
+    <!-- Ombre du cercle de succes (0 10 22 vert a 30%) dessinee avec un degrade radial : l'ombre native d'Android est carree sur un Border arrondi -->
+    <Style TargetType="Ellipse" x:Key="SuccessCircleShadow">
+        <Setter Property="WidthRequest" Value="108" />
+        <Setter Property="HeightRequest" Value="108" />
+        <Setter Property="TranslationY" Value="10" />
+        <Setter Property="Opacity" Value="0.3" />
+        <Setter Property="Fill">
+            <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                <GradientStop Color="{StaticResource ShadowGreen}" Offset="0.62" />
+                <GradientStop Color="Transparent" Offset="1.0" />
+            </RadialGradientBrush>
+        </Setter>
+    </Style>
+    <!-- Avatar de l'accueil : 40, anneau blanc casse 2 (le contour est dessine par la Border) ; avatar du profil : 104, anneau 4 -->
+    <Style TargetType="Border" x:Key="AvatarSmall">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="22" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,4" Radius="10" Opacity="0.18" />
+        </Setter>
+    </Style>
+
+    <!-- Avatar sans photo : meme style, fond vert tres clair et initiale -->
+    <Style TargetType="Border" x:Key="AvatarInitialCircle" BasedOn="{StaticResource AvatarSmall}">
+        <Setter Property="BackgroundColor" Value="{StaticResource TagBackground}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="AvatarInitial">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Grand avatar du profil : photo de 104 + anneau de 4 = 112 -->
+    <Style TargetType="Border" x:Key="AvatarLarge">
+        <Setter Property="WidthRequest" Value="112" />
+        <Setter Property="HeightRequest" Value="112" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="56" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="4" />
+        <Setter Property="Stroke" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,10" Radius="24" Opacity="0.18" />
+        </Setter>
+    </Style>
+
+    <!-- Grand avatar sans photo : meme style, fond vert tres clair et grande initiale -->
+    <Style TargetType="Border" x:Key="AvatarLargeInitialCircle" BasedOn="{StaticResource AvatarLarge}">
+        <Setter Property="BackgroundColor" Value="{StaticResource TagBackground}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="AvatarInitialLarge">
+        <Setter Property="TextColor" Value="{StaticResource DeepGreen}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+        <Setter Property="FontSize" Value="40" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Logo de l'organisation : 56 x 56 rond, fond blanc casse, ombre 0 6 16 vert a 14% -->
+    <Style TargetType="Border" x:Key="OrganizationLogoCircle">
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="28" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="16" Opacity="0.14" />
+        </Setter>
+    </Style>
+
+    <!-- Ombre douce d'un petit rond blanc (0 4 12 vert a 12%) dessinee avec un degrade radial : l'ombre native d'Android est carree sur un Border arrondi -->
+    <Style TargetType="Ellipse" x:Key="SoftCircleShadow">
+        <Setter Property="TranslationY" Value="4" />
+        <Setter Property="Opacity" Value="0.12" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Fill">
+            <RadialGradientBrush Center="0.5,0.5" Radius="0.5">
+                <GradientStop Color="{StaticResource ShadowGreen}" Offset="0.7" />
+                <GradientStop Color="Transparent" Offset="1.0" />
+            </RadialGradientBrush>
+        </Setter>
+    </Style>
+    <!-- Rond de la boite sur le detail du besoin : 44, fond blanc casse, ombre 0 4 12 vert a 12% -->
+    <Style TargetType="Border" x:Key="NeedStatCircle">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="22" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceWhite}" />
+    </Style>
+
+    <!-- Bouton de position sur la carte : 44, rond, fond blanc casse a 92%, contour blanc a 80%, ombre 0 6 14 vert a 14% -->
+    <Style TargetType="Border" x:Key="MapLocateButtonBorder">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="22" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="Stroke" Value="{StaticResource GlassBorder80}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource GlassSurface92}" />
+        <Setter Property="Shadow">
+            <Shadow Brush="{StaticResource ShadowGreenBrush}" Offset="0,6" Radius="14" Opacity="0.14" />
+        </Setter>
+    </Style>
+
+    <!-- ===== Chargement : blocs gris simples, sans animation ===== -->
+    <Style TargetType="Border" x:Key="SkeletonBlock">
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="16" />
+        </Setter>
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SkeletonGray}" />
+    </Style>
+
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color" Value="{StaticResource PrimaryGreen}" />
+    </Style>
+
+    <!-- ===== Separateurs ===== -->
+    <Style TargetType="BoxView" x:Key="DividerLine">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource DividerList}" />
+    </Style>
+
+    <!-- Traits de chaque cote du mot "ou" : 1 de haut, #DCE3DD -->
+    <Style TargetType="BoxView" x:Key="DividerOr">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource BorderDisabled}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Separateur vertical entre les chiffres de la vue d'ensemble : 1 de large, #C9D8CF -->
+    <Style TargetType="BoxView" x:Key="DividerStatLine">
+        <Setter Property="WidthRequest" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource DividerStat}" />
+    </Style>
+
+    <Style TargetType="BoxView" x:Key="DividerVertical">
+        <Setter Property="WidthRequest" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource BorderDisabled}" />
+    </Style>
+
+</ResourceDictionary>

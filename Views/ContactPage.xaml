@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.ContactPage"
+             x:DataType="vm:ContactViewModel"
+             Title="Contacter l'orphelinat"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Barre du haut -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="4"
+              Padding="14,0,20,0">
+            <ImageButton Grid.Column="0"
+                         Source="icon_arrow_left.png"
+                         Padding="10"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <Label Grid.Column="1"
+                   Text="Contacter l'orphelinat"
+                   Style="{StaticResource TopBarTitle}" />
+        </Grid>
+
+        <!-- Contenu : defile (par exemple quand le clavier est ouvert) -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,8,20,20">
+
+                <!-- Echec de l'envoi : bandeau rouge en haut -->
+                <Border Style="{StaticResource ErrorBannerBorder}"
+                        Margin="0,0,0,14"
+                        IsVisible="{Binding ShowFailure}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Image Grid.Column="0"
+                               Source="icon_alert_circle.png"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               VerticalOptions="Start"
+                               Margin="0,1,0,0" />
+                        <Label Grid.Column="1"
+                               Text="Votre message n'a pas pu être envoyé. Vos informations sont conservées."
+                               Style="{StaticResource ErrorBannerText}" />
+                    </Grid>
+                </Border>
+
+                <!-- Carte de l'orphelinat -->
+                <Border Style="{StaticResource CardBorder}" Padding="0">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="8,8,14,8">
+                        <Grid Grid.Column="0" VerticalOptions="Center">
+                            <Ellipse Style="{StaticResource SoftCircleShadow}" WidthRequest="64" HeightRequest="64" />
+                            <Border Style="{StaticResource ContactLogoCircle}">
+                                <Image Source="icon_house_heart.png"
+                                       WidthRequest="30"
+                                       HeightRequest="30"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="{Binding Orphanage.Name}" Style="{StaticResource SectionTitle}" />
+                            <Label Text="{Binding LocationLine}"
+                                   Style="{StaticResource Caption}"
+                                   Margin="0,2,0,0" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Actions : Appeler, E-mail, Itineraire -->
+                <Grid ColumnDefinitions="*,*,*"
+                      ColumnSpacing="10"
+                      Margin="0,14,0,0">
+                    <components:ActionCard Grid.Column="0"
+                                           Icon="icon_phone.png"
+                                           Text="Appeler"
+                                           Command="{Binding CallCommand}"
+                                           SemanticProperties.Description="Appeler" />
+                    <components:ActionCard Grid.Column="1"
+                                           Icon="icon_envelope.png"
+                                           Text="E-mail"
+                                           Command="{Binding EmailCommand}"
+                                           SemanticProperties.Description="E-mail" />
+                    <components:ActionCard Grid.Column="2"
+                                           Icon="icon_route.png"
+                                           Text="Itinéraire"
+                                           Command="{Binding RouteCommand}"
+                                           SemanticProperties.Description="Itinéraire" />
+                </Grid>
+
+                <!-- Objet -->
+                <components:PickerField Margin="0,22,0,0"
+                                        Title="Objet"
+                                        Items="{Binding Subjects}"
+                                        SelectedItem="{Binding Subject}" />
+
+                <!-- Message -->
+                <components:TextArea Margin="0,18,0,0"
+                                     Title="Votre message"
+                                     TitleSpacing="6"
+                                     VerticalPadding="14"
+                                     Placeholder="Écrivez votre message ici"
+                                     BoxHeight="128"
+                                     MaxLength="500"
+                                     IsError="{Binding HasMessageError}"
+                                     Text="{Binding Message}" />
+                <Grid ColumnDefinitions="*,Auto" Margin="0,2,0,0">
+                    <Label Grid.Column="0"
+                           Text="{Binding MessageError}"
+                           Style="{StaticResource ErrorText}"
+                           Margin="18,2,0,0"
+                           IsVisible="{Binding HasMessageError}" />
+                    <Label Grid.Column="1"
+                           Text="{Binding MessageCounter}"
+                           Style="{StaticResource CharCounter}" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bouton du bas, fixe -->
+        <Grid Grid.Row="2" Padding="20,8,20,20">
+            <components:PrimaryButton Text="{Binding ButtonText}"
+                                      IsBusy="{Binding IsBusy}"
+                                      Command="{Binding SendCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

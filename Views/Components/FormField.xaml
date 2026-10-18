@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.FormField"
+             x:DataType="components:FormField"
+             x:Name="Root">
+    <VerticalStackLayout>
+
+        <!-- Libelle au-dessus du champ -->
+        <Label x:Name="TitleLabel"
+               Style="{StaticResource FieldLabel}"
+               Margin="0,0,0,6"
+               IsVisible="False" />
+
+        <!-- Anneau de focus (visible seulement a l'etat Actif) -->
+        <Border x:Name="Ring" Style="{StaticResource FieldRing}">
+            <Border x:Name="Box" Style="{StaticResource FieldBorder}">
+                <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+
+                    <Image x:Name="LeadingIcon"
+                           Grid.Column="0"
+                           WidthRequest="20"
+                           HeightRequest="20"
+                           Margin="0,0,10,0"
+                           VerticalOptions="Center"
+                           IsVisible="False" />
+
+                    <!-- Prefixe fixe (ex. +237) et son separateur vertical -->
+                    <Label x:Name="PrefixLabel"
+                           Grid.Column="1"
+                           Style="{StaticResource FieldPrefix}"
+                           Margin="0,0,10,0"
+                           IsVisible="False" />
+                    <BoxView x:Name="PrefixDivider"
+                             Grid.Column="2"
+                             Style="{StaticResource DividerVertical}"
+                             HeightRequest="22"
+                             Margin="0,0,10,0"
+                             VerticalOptions="Center"
+                             IsVisible="False" />
+
+                    <Entry x:Name="Input"
+                           Grid.Column="3"
+                           VerticalOptions="Center"
+                           IsSpellCheckEnabled="False"
+                           Text="{Binding Text, Source={x:Reference Root}}"
+                           Placeholder="{Binding Placeholder, Source={x:Reference Root}}"
+                           Keyboard="{Binding Keyboard, Source={x:Reference Root}}"
+                           ReturnType="{Binding ReturnType, Source={x:Reference Root}}"
+                           Focused="OnInputFocused"
+                           Unfocused="OnInputUnfocused"
+                           Completed="OnInputCompleted" />
+
+                    <!-- Oeil pour afficher le mot de passe -->
+                    <ImageButton x:Name="EyeButton"
+                                 Grid.Column="4"
+                                 Source="icon_eye.png"
+                                 Padding="12"
+                                 Margin="10,0,0,0"
+                                 IsVisible="False"
+                                 SemanticProperties.Description="Afficher le mot de passe"
+                                 Clicked="OnEyeClicked" />
+
+                    <!-- Icone d'etat : erreur ou champ valide -->
+                    <Image x:Name="StatusIcon"
+                           Grid.Column="4"
+                           WidthRequest="22"
+                           HeightRequest="22"
+                           Margin="10,0,0,0"
+                           VerticalOptions="Center"
+                           IsVisible="False" />
+                </Grid>
+            </Border>
+        </Border>
+
+        <!-- Message d'erreur, ou texte d'aide gris, sous le champ -->
+        <Label x:Name="MessageLabel"
+               Style="{StaticResource ErrorText}"
+               Margin="18,4,0,0"
+               IsVisible="False" />
+
+    </VerticalStackLayout>
+</ContentView>

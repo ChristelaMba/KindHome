@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.OnboardingPage"
+             Title="Bienvenue"
+             SafeAreaEdges="None"
+             BackgroundColor="{StaticResource DeepGreen}">
+    <Grid SafeAreaEdges="None">
+
+        <!-- Photo plein ecran (sous la barre d'etat) et fondu vers le vert -->
+        <Image Source="onboarding_photo.jpg"
+               Aspect="AspectFill"
+               HeightRequest="520"
+               VerticalOptions="Start"
+               SemanticProperties.Description="Enfant souriant" />
+        <BoxView HeightRequest="520"
+                 VerticalOptions="Start"
+                 Background="{StaticResource OnboardingPhotoFadeBrush}" />
+
+        <!-- Contenu : respecte la barre d'etat en haut et la barre de navigation en bas -->
+        <Grid SafeAreaEdges="Container"
+              RowDefinitions="Auto,*,Auto"
+              Padding="24,0">
+
+            <HorizontalStackLayout Grid.Row="0"
+                                   Margin="0,16,0,0"
+                                   Spacing="10"
+                                   VerticalOptions="Start">
+                <Image Source="logo_white.png"
+                       WidthRequest="42"
+                       HeightRequest="46.7"
+                       VerticalOptions="Center"
+                       SemanticProperties.Description="Logo KindHome" />
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="KindHome" Style="{StaticResource BrandNameOnDark}" />
+                    <Label Text="Ensemble pour eux" Style="{StaticResource BrandTaglineOnDark}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout Grid.Row="2" Margin="0,0,0,28">
+                <Label Text="Parce que chaque enfant mérite un avenir."
+                       Style="{StaticResource OnboardingTitle}"
+                       WidthRequest="300"
+                       HorizontalOptions="Start" />
+                <Label Text="Trouvez un orphelinat près de chez vous, soutenez ses besoins, devenez bénévole et faites la différence."
+                       Style="{StaticResource OnboardingText}"
+                       Margin="0,14,0,0"
+                       WidthRequest="320"
+                       HorizontalOptions="Start" />
+
+                <HorizontalStackLayout Margin="0,20,0,0"
+                                       Spacing="6"
+                                       SemanticProperties.Description="Page 1 sur 3">
+                    <Border Style="{StaticResource PageDotActive}" />
+                    <Border Style="{StaticResource PageDot}" />
+                    <Border Style="{StaticResource PageDot}" />
+                </HorizontalStackLayout>
+
+                <components:PrimaryButton Text="Commencer"
+                                          Icon="icon_arrow_right_white.png"
+                                          OnDark="True"
+                                          Margin="0,20,0,0"
+                                          Clicked="OnStartClicked" />
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.OrphanageDetailPage"
+             x:DataType="vm:OrphanageDetailViewModel"
+             Title="Fiche orphelinat"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid SafeAreaEdges="None">
+
+        <!-- Grande photo (passe sous la barre d'etat) et voile sombre en haut -->
+        <Image Source="{Binding Orphanage.CoverPhoto}"
+               Aspect="AspectFill"
+               HeightRequest="232"
+               VerticalOptions="Start"
+               SemanticProperties.Description="{Binding Orphanage.Name}" />
+        <BoxView HeightRequest="120"
+                 VerticalOptions="Start"
+                 Background="{StaticResource PhotoTopFadeLightBrush}" />
+
+        <!-- Contenu qui defile par-dessus la photo -->
+        <ScrollView SafeAreaEdges="None">
+            <Grid Margin="0,164,0,0" RowDefinitions="40,*">
+                <Border Grid.Row="1" Style="{StaticResource PhotoSheetBorder}"
+                        Padding="20,50,20,110"
+                        MinimumHeightRequest="700">
+                    <VerticalStackLayout>
+
+                        <Label Text="{Binding Orphanage.Name}" Style="{StaticResource Heading2}" />
+
+                        <HorizontalStackLayout Margin="0,6,0,0" Spacing="16">
+                            <HorizontalStackLayout Spacing="5">
+                                <Image Source="icon_pin_dark_15.png" WidthRequest="15" HeightRequest="15" VerticalOptions="Center" />
+                                <Label Text="{Binding LocationLine}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="5">
+                                <Image Source="icon_pin_dark_15.png" WidthRequest="15" HeightRequest="15" VerticalOptions="Center" />
+                                <Label Text="{Binding Orphanage.DistanceText}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <!-- Categories -->
+                        <HorizontalStackLayout Margin="0,14,0,0"
+                                               Spacing="8"
+                                               BindableLayout.ItemsSource="{Binding Orphanage.Categories}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border Style="{StaticResource TagBorder}">
+                                        <Label Text="{Binding .}" Style="{StaticResource TagLabel}" />
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+
+                        <!-- Structure verifiee -->
+                        <HorizontalStackLayout Margin="0,12,0,0"
+                                               Spacing="6"
+                                               IsVisible="{Binding Orphanage.IsVerified}">
+                            <Image Source="icon_shield_check.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center" />
+                            <Label Text="Structure vérifiée" Style="{StaticResource VerifiedLabel}" />
+                        </HorizontalStackLayout>
+
+                        <!-- Enfants et note -->
+                        <HorizontalStackLayout Margin="0,16,0,0" Spacing="16">
+                            <HorizontalStackLayout Spacing="8">
+                                <Image Source="icon_people_20.png" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                                <Label Text="{Binding Orphanage.ChildrenText}" Style="{StaticResource InfoBold}" />
+                            </HorizontalStackLayout>
+                            <BoxView Style="{StaticResource DividerVertical}" HeightRequest="22" VerticalOptions="Center" />
+                            <HorizontalStackLayout Spacing="6">
+                                <Image Source="icon_star.png" WidthRequest="18" HeightRequest="18" VerticalOptions="Center" />
+                                <Label Text="{Binding Orphanage.RatingText}" Style="{StaticResource InfoBold}" />
+                                <Label Text="{Binding ReviewsText}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <!-- Onglets -->
+                        <Grid Margin="0,16,0,0" ColumnDefinitions="*,*,*" HeightRequest="45">
+                            <Grid Grid.Column="0">
+                                <Label x:Name="AboutTabLabel" Text="À propos" Style="{StaticResource DetailTabActive}" />
+                                <BoxView x:Name="AboutTabLine" HeightRequest="2" VerticalOptions="End" BackgroundColor="{StaticResource PrimaryGreen}" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectTabCommand}" CommandParameter="About" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <Label x:Name="NeedsTabLabel" Text="Besoins" Style="{StaticResource DetailTab}" />
+                                <BoxView x:Name="NeedsTabLine" HeightRequest="2" VerticalOptions="End" BackgroundColor="{StaticResource PrimaryGreen}" IsVisible="False" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectTabCommand}" CommandParameter="Needs" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Label x:Name="NewsTabLabel" Text="Actualités" Style="{StaticResource DetailTab}" />
+                                <BoxView x:Name="NewsTabLine" HeightRequest="2" VerticalOptions="End" BackgroundColor="{StaticResource PrimaryGreen}" IsVisible="False" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectTabCommand}" CommandParameter="News" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <BoxView Grid.ColumnSpan="3" HeightRequest="1" VerticalOptions="End" BackgroundColor="{StaticResource DividerTab}" ZIndex="-1" />
+                        </Grid>
+
+                        <!-- A propos -->
+                        <Label Text="{Binding Orphanage.About}"
+                               Style="{StaticResource BodyText}"
+                               Margin="0,14,0,0"
+                               IsVisible="{Binding IsAboutTab}" />
+
+                        <!-- Besoins -->
+                        <VerticalStackLayout Margin="0,14,0,0"
+                                             Spacing="12"
+                                             IsVisible="{Binding ShowNeedsList}"
+                                             BindableLayout.ItemsSource="{Binding Orphanage.Needs}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:Need">
+                                    <components:NeedCard Need="{Binding .}"
+                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrphanageDetailViewModel}}, Path=OpenNeedCommand}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <components:EmptyState Margin="0,30,0,0"
+                                               Icon="icon_bag_empty.png"
+                                               Title="Aucun besoin pour le moment"
+                                               Message="Cet orphelinat n'a pas encore publié de besoins."
+                                               IsVisible="{Binding ShowNeedsEmpty}" />
+
+                        <!-- Actualites -->
+                        <VerticalStackLayout Margin="0,14,0,0"
+                                             Spacing="12"
+                                             IsVisible="{Binding IsNewsTab}"
+                                             BindableLayout.ItemsSource="{Binding Orphanage.News}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:NewsItem">
+                                    <Border Style="{StaticResource CardBorder}" Padding="14">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                                            <Border Grid.Column="0"
+                                                    Style="{StaticResource IconTileSmallBorder}"
+                                                    VerticalOptions="Center">
+                                                <Image Source="icon_news.png"
+                                                       WidthRequest="22"
+                                                       HeightRequest="22"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Title}" Style="{StaticResource CardTitle}" />
+                                                <Label Text="{Binding Date}"
+                                                       Style="{StaticResource CardSubtitle}"
+                                                       Margin="0,2,0,0" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Grand rond blanc avec la maison, qui deborde sur le panneau -->
+                <Border Grid.RowSpan="2"
+                        Style="{StaticResource OrganizationLogoCircle}"
+                        WidthRequest="80"
+                        HeightRequest="80"
+                        StrokeShape="RoundRectangle 40"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        Margin="20,0,0,0"
+                        InputTransparent="True">
+                    <Image Source="logo_orphanage_house.png"
+                           WidthRequest="46"
+                           HeightRequest="46"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           SemanticProperties.Description="Logo de l'orphelinat" />
+                </Border>
+            </Grid>
+        </ScrollView>
+
+        <!-- Boutons ronds du haut -->
+        <Grid SafeAreaEdges="Container,Container,Container,None"
+              VerticalOptions="Start"
+              Padding="20,12,20,0"
+              ColumnDefinitions="Auto,*,Auto,Auto"
+              ColumnSpacing="12">
+            <ImageButton Grid.Column="0"
+                         Style="{StaticResource OverlayRoundButton}"
+                         Source="icon_arrow_left.png"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <ImageButton Grid.Column="2"
+                         Style="{StaticResource OverlayRoundButton}"
+                         Source="{Binding HeartIcon}"
+                         Command="{Binding ToggleFavoriteCommand}"
+                         SemanticProperties.Description="Ajouter aux favoris" />
+            <ImageButton Grid.Column="3"
+                         Style="{StaticResource OverlayRoundButton}"
+                         Source="icon_share.png"
+                         Command="{Binding ShareCommand}"
+                         SemanticProperties.Description="Partager" />
+        </Grid>
+
+        <!-- Boutons du bas, fixes -->
+        <Grid SafeAreaEdges="Container,None,Container,Container"
+              VerticalOptions="End"
+              Padding="20,0,20,24"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="12">
+            <Border Grid.Column="0"
+                    WidthRequest="52"
+                    HeightRequest="52"
+                    StrokeShape="RoundRectangle 26"
+                    StrokeThickness="1.5"
+                    Stroke="{StaticResource GreenGradientStart}"
+                    BackgroundColor="Transparent"
+                    SemanticProperties.Description="Contacter l'orphelinat">
+                <Image Source="icon_message.png"
+                       WidthRequest="22"
+                       HeightRequest="22"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MessageCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
+            <components:PrimaryButton Grid.Column="1"
+                                      Text="Soutenir cet orphelinat"
+                                      Command="{Binding SupportCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

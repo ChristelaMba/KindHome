@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.NeedDetailPage"
+             x:DataType="vm:NeedDetailViewModel"
+             Title="Détail du besoin"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid SafeAreaEdges="None">
+
+        <!-- Grande photo (passe sous la barre d'etat), ou fond uni avec l'image du besoin au centre -->
+        <Image Source="{Binding Need.CoverPhoto}"
+               Aspect="AspectFill"
+               HeightRequest="296"
+               VerticalOptions="Start"
+               IsVisible="{Binding Need.HasCoverPhoto}"
+               SemanticProperties.Description="{Binding Need.Title}" />
+        <Grid HeightRequest="296"
+              SafeAreaEdges="None"
+              VerticalOptions="Start"
+              BackgroundColor="{Binding CoverColor}"
+              IsVisible="{Binding HasNoCoverPhoto}">
+            <Border StrokeShape="RoundRectangle 24"
+                    StrokeThickness="0"
+                    WidthRequest="200"
+                    HeightRequest="176"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    Margin="0,70,0,0">
+                <Image Source="{Binding Need.Photo}"
+                       Aspect="AspectFill"
+                       SemanticProperties.Description="{Binding Need.Title}" />
+            </Border>
+        </Grid>
+        <BoxView HeightRequest="110"
+                 VerticalOptions="Start"
+                 Background="{StaticResource PhotoTopFadeStrongBrush}" />
+
+        <!-- Contenu qui defile par-dessus la photo -->
+        <ScrollView SafeAreaEdges="None">
+            <Border Margin="0,262,0,0"
+                    Style="{StaticResource PhotoSheetBorder}"
+                    Padding="0,24,0,110"
+                    MinimumHeightRequest="600">
+                <VerticalStackLayout Padding="20,0">
+
+                    <Label Text="{Binding Need.Title}" Style="{StaticResource Heading2}" />
+
+                    <HorizontalStackLayout Margin="0,8,0,0" Spacing="6">
+                        <Image Source="icon_pin_dark_15.png" WidthRequest="15" HeightRequest="15" VerticalOptions="Center" />
+                        <Label Text="{Binding OrphanageLine}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,4,0,0" Spacing="6">
+                        <Image Source="icon_pin_dark_15.png" WidthRequest="15" HeightRequest="15" VerticalOptions="Center" />
+                        <Label Text="{Binding Need.Orphanage.DistanceText}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Rond avec la boite et quantite necessaire -->
+                    <HorizontalStackLayout Margin="0,16,0,0" Spacing="12">
+                        <Grid Margin="-6">
+                            <Ellipse Style="{StaticResource SoftCircleShadow}" WidthRequest="56" HeightRequest="56" />
+                            <Border Style="{StaticResource NeedStatCircle}">
+                                <Image Source="icon_box.png"
+                                       WidthRequest="22"
+                                       HeightRequest="22"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                        <Label Text="{Binding Need.TotalText}"
+                               Style="{StaticResource FieldLabel}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <components:NeedProgressBar Progress="{Binding Need.Progress}"
+                                                Size="Large"
+                                                Margin="0,14,0,0" />
+                    <Label Text="{Binding Need.CollectedText}"
+                           Style="{StaticResource CaptionSmall}"
+                           Margin="0,6,0,0" />
+
+                    <Label Text="Pourquoi c'est important ?"
+                           Style="{StaticResource SectionTitle}"
+                           Margin="0,22,0,0" />
+                    <Label Text="{Binding Need.WhyImportant}"
+                           Style="{StaticResource BodyText}"
+                           Margin="0,8,0,0" />
+                </VerticalStackLayout>
+            </Border>
+        </ScrollView>
+
+        <!-- Boutons ronds du haut -->
+        <Grid SafeAreaEdges="Container,Container,Container,None"
+              VerticalOptions="Start"
+              Padding="20,12,20,0"
+              ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="12">
+            <ImageButton Grid.Column="0"
+                         Style="{StaticResource OverlayRoundButton}"
+                         Source="icon_arrow_left.png"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <ImageButton Grid.Column="2"
+                         Style="{StaticResource OverlayRoundButton}"
+                         Source="{Binding HeartIcon}"
+                         Command="{Binding ToggleFavoriteCommand}"
+                         SemanticProperties.Description="Ajouter aux favoris" />
+        </Grid>
+
+        <!-- Boutons du bas, fixes -->
+        <Grid SafeAreaEdges="Container,None,Container,Container"
+              VerticalOptions="End"
+              Padding="20,0,20,28"
+              ColumnDefinitions="*,*"
+              ColumnSpacing="12">
+            <components:SecondaryButton Grid.Column="0"
+                                        Text="Faire un don"
+                                        Icon="icon_gift.png"
+                                        Split="True"
+                                        Command="{Binding DonateCommand}" />
+            <components:PrimaryButton Grid.Column="1"
+                                      Text="Devenir bénévole"
+                                      Icon="icon_person_white.png"
+                                      IconOnLeft="True"
+                                      Split="True"
+                                      Command="{Binding VolunteerCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

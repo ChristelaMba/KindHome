@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.RegisterPage"
+             x:DataType="vm:RegisterViewModel"
+             Title="Inscription"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <ScrollView x:Name="Scroller">
+        <Grid x:Name="ContentGrid"
+              RowDefinitions="Auto,*,Auto"
+              Padding="20,0,20,8">
+
+            <VerticalStackLayout Grid.Row="0">
+
+                <!-- Barre du haut -->
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="4"
+                      Margin="-6,0,0,0">
+                    <ImageButton Grid.Column="0"
+                                 Source="icon_arrow_left.png"
+                                 Padding="10"
+                                 Command="{Binding BackCommand}"
+                                 SemanticProperties.Description="Retour à la connexion" />
+                    <Label Grid.Column="1"
+                           Text="Créer un compte"
+                           Style="{StaticResource TopBarTitle}" />
+                </Grid>
+                <Label Text="Quelques informations suffisent pour commencer."
+                       Style="{StaticResource SubtitleSmall}"
+                       Margin="4,6,0,0" />
+
+                <!-- Role -->
+                <VerticalStackLayout Margin="0,20,0,0">
+                    <Label Text="Je suis"
+                           Style="{StaticResource FieldLabel}"
+                           Margin="0,0,0,6" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <components:ChoiceChip Grid.Column="0"
+                                               Text="Donateur"
+                                               IsSelected="{Binding IsDonorSelected}"
+                                               Command="{Binding SelectRoleCommand}"
+                                               CommandParameter="{x:Static models:UserRole.Donor}" />
+                        <components:ChoiceChip Grid.Column="1"
+                                               Text="Bénévole"
+                                               IsSelected="{Binding IsVolunteerSelected}"
+                                               Command="{Binding SelectRoleCommand}"
+                                               CommandParameter="{x:Static models:UserRole.Volunteer}" />
+                        <components:ChoiceChip Grid.Column="2"
+                                               Text="Orphelinat"
+                                               IsSelected="{Binding IsOrganizationSelected}"
+                                               Command="{Binding SelectRoleCommand}"
+                                               CommandParameter="{x:Static models:UserRole.Organization}" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Champs -->
+                <VerticalStackLayout Margin="0,18,0,0" Spacing="14">
+                    <components:FormField x:Name="NameField"
+                                          Title="Nom complet"
+                                          MessageTopMargin="3"
+                                          ReturnType="Next"
+                                          Text="{Binding FullName}"
+                                          ErrorMessage="{Binding NameError}"
+                                          IsValid="{Binding NameValid}"
+                                          BlurCommand="{Binding BlurNameCommand}"
+                                          Completed="OnNameCompleted" />
+
+                    <components:FormField x:Name="EmailField"
+                                          Title="Adresse e-mail"
+                                          Keyboard="Email"
+                                          MessageTopMargin="3"
+                                          ReturnType="Next"
+                                          Text="{Binding Email}"
+                                          ErrorMessage="{Binding EmailError}"
+                                          IsValid="{Binding EmailValid}"
+                                          BlurCommand="{Binding BlurEmailCommand}"
+                                          Completed="OnEmailCompleted" />
+
+                    <components:PhoneField x:Name="PhoneField"
+                                           Title="Téléphone"
+                                           Placeholder="6 XX XX XX XX"
+                                           MessageTopMargin="3"
+                                           ReturnType="Next"
+                                           Text="{Binding Phone}"
+                                           ErrorMessage="{Binding PhoneError}"
+                                           IsValid="{Binding PhoneValid}"
+                                           BlurCommand="{Binding BlurPhoneCommand}"
+                                           Completed="OnPhoneCompleted" />
+
+                    <components:FormField x:Name="PasswordField"
+                                          Title="Mot de passe"
+                                          Placeholder="Créez un mot de passe"
+                                          HelperText="8 caractères minimum, dont un chiffre."
+                                          IsPassword="True"
+                                          MessageTopMargin="3"
+                                          ReturnType="Done"
+                                          Text="{Binding Password}"
+                                          ErrorMessage="{Binding PasswordError}"
+                                          IsValid="{Binding PasswordValid}"
+                                          BlurCommand="{Binding BlurPasswordCommand}"
+                                          Completed="OnPasswordCompleted" />
+                </VerticalStackLayout>
+
+                <components:CheckBoxField Margin="0,10,0,0"
+                                          Text="J'accepte les conditions d'utilisation et la charte de protection de l'enfant."
+                                          IsChecked="{Binding AcceptedTerms}"
+                                          ErrorMessage="{Binding TermsError}" />
+
+                <components:PrimaryButton Margin="0,10,0,0"
+                                          Text="{Binding ButtonText}"
+                                          IsEnabled="{Binding CanSubmit}"
+                                          IsBusy="{Binding IsBusy}"
+                                          Command="{Binding CreateCommand}" />
+            </VerticalStackLayout>
+
+            <!-- Bas de page -->
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="Auto,Auto"
+                  ColumnSpacing="4"
+                  HeightRequest="44"
+                  HorizontalOptions="Center">
+                <Label Grid.Column="0"
+                       Text="Déjà un compte ?"
+                       Style="{StaticResource Subtitle}"
+                       VerticalOptions="Center" />
+                <Grid Grid.Column="1"
+                      Padding="4,0"
+                      SemanticProperties.Description="Se connecter">
+                    <Label Text="Se connecter" Style="{StaticResource LinkTextBold}" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LoginLinkCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

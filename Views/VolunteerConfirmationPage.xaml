@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.VolunteerConfirmationPage"
+             x:DataType="vm:VolunteerConfirmationViewModel"
+             Title="Candidature envoyée"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <ScrollView x:Name="Scroller">
+        <Grid x:Name="ContentGrid"
+              RowDefinitions="Auto,*,Auto"
+              Padding="20,0,20,24">
+
+            <VerticalStackLayout Grid.Row="0">
+
+                <!-- Fleche retour : ramene a l'accueil -->
+                <ImageButton Source="icon_arrow_left.png"
+                             Padding="10"
+                             Margin="-6,0,0,0"
+                             HorizontalOptions="Start"
+                             Command="{Binding HomeCommand}"
+                             SemanticProperties.Description="Retour à l'accueil" />
+
+                <!-- Grand cercle avec la coche et son halo -->
+                <Border Style="{StaticResource SuccessCircleOuter}"
+                        Margin="0,20,0,0"
+                        HorizontalOptions="Center">
+                    <Grid>
+                        <Ellipse Style="{StaticResource SuccessCircleShadow}"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center" />
+                        <Border Style="{StaticResource SuccessCircleInner}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                            <Image Source="icon_check_big.png"
+                                   WidthRequest="40"
+                                   HeightRequest="40"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   SemanticProperties.Description="Succès" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Label Text="Candidature envoyée"
+                       Style="{StaticResource Heading1}"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,22,0,0" />
+                <Label Text="{Binding Subtitle}"
+                       Style="{StaticResource Subtitle}"
+                       HorizontalTextAlignment="Center"
+                       Margin="12,8,12,0" />
+
+                <!-- Recapitulatif du don -->
+                <Border Style="{StaticResource CardBorder}"
+                        Padding="18,6"
+                        Margin="0,24,0,0">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Rows}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SummaryRow">
+                                <!-- Ligne de 48, suivie d'un filet de 1 (49 au total, comme la maquette) -->
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="Auto,*"
+                                          ColumnSpacing="12"
+                                          MinimumHeightRequest="48">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding Label}"
+                                               Style="{StaticResource SummaryLabel}" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Value}"
+                                               Style="{StaticResource SummaryValue}" />
+                                    </Grid>
+                                    <BoxView Style="{StaticResource DividerLine}"
+                                             IsVisible="{Binding ShowDivider}" />
+                                </VerticalStackLayout>                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Et maintenant ? -->
+                <Border Style="{StaticResource NoticeBoxBorder}" Margin="0,16,0,0">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Image Grid.Column="0"
+                               Source="icon_info.png"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               VerticalOptions="Start"
+                               Margin="0,1,0,0" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Et maintenant ?" Style="{StaticResource NoticeTitle}" />
+                            <Label Text="L'orphelinat étudie votre candidature et vous répond directement."
+                                   Style="{StaticResource NextStepText}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Boutons du bas -->
+            <VerticalStackLayout Grid.Row="2" Spacing="12" Margin="0,16,0,0">
+                <components:SecondaryButton Text="Voir mes missions"
+                                            Command="{Binding MissionsCommand}" />
+                <components:PrimaryButton Text="Retour à l'accueil"
+                                          Command="{Binding HomeCommand}" />
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

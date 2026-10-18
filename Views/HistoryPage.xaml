@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.HistoryPage"
+             x:DataType="vm:HistoryViewModel"
+             Title="Mon historique"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Barre du haut -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="4"
+              Padding="14,0,20,0">
+            <ImageButton Grid.Column="0"
+                         Source="icon_arrow_left.png"
+                         Padding="10"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <Label Grid.Column="1"
+                   Text="Mon historique"
+                   Style="{StaticResource TopBarTitle}" />
+        </Grid>
+        <!-- Puces Dons / Missions : une seule choisie a la fois -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="8" Padding="20,8,20,0">
+            <components:ChoiceChip Text="Dons"
+                                   IsSelected="{Binding ShowDonations}"
+                                   Command="{Binding ShowDonationsCommand}" />
+            <components:ChoiceChip Text="Missions"
+                                   IsSelected="{Binding ShowMissions}"
+                                   Command="{Binding ShowMissionsCommand}" />
+        </HorizontalStackLayout>
+
+        <!-- Liste des dons ou des missions -->
+        <ScrollView Grid.Row="2" IsVisible="{Binding ShowList}">
+            <VerticalStackLayout Padding="20,16,20,24"
+                                 Spacing="12"
+                                 BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:HistoryEntry">
+                        <Border Style="{StaticResource CardBorder}" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="{Binding Title}" Style="{StaticResource CardTitle}" />
+                                    <Label Text="{Binding Orphanage}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0" />
+                                    <Label Text="{Binding Detail}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0" />
+                                    <Label Text="{Binding ExtraLine}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0"
+                                           IsVisible="{Binding HasExtraLine}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1"
+                                        Style="{StaticResource TagBorder}"
+                                        VerticalOptions="Start">
+                                    <Label Text="{Binding Status}" Style="{StaticResource TagLabel}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Aucun don ou aucune mission -->
+        <components:EmptyState Grid.Row="2"
+                               VerticalOptions="Center"
+                               Icon="{Binding EmptyIcon}"
+                               Title="{Binding EmptyTitle}"
+                               Message="{Binding EmptyMessage}"
+                               ButtonText="Découvrir les besoins"
+                               Command="{Binding DiscoverCommand}"
+                               IsVisible="{Binding ShowEmpty}" />
+    </Grid>
+</ContentPage>

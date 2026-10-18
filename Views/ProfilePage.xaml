@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.ProfilePage"
+             x:DataType="vm:ProfileViewModel"
+             Title="Profil"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <!-- Contenu : respecte la barre d'etat en haut, defile si l'ecran est petit -->
+        <Grid Grid.Row="0" SafeAreaEdges="Container,Container,Container,None">
+            <ScrollView>
+                <VerticalStackLayout Padding="0,16,0,16">
+
+                    <!-- Avatar, nom, role, lieu. L'anneau de 4 fait partie du cercle (la maquette le dessine en dehors de la photo) : -4 en haut et en bas. -->
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Border Style="{StaticResource AvatarLarge}"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding HasPhoto}"
+                                SemanticProperties.Description="{Binding Name}">
+                            <Image Source="{Binding Photo}" Aspect="AspectFill" />
+                        </Border>
+                        <Border Style="{StaticResource AvatarLargeInitialCircle}"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding HasNoPhoto}">
+                            <Label Text="{Binding Initial}" Style="{StaticResource AvatarInitialLarge}" />
+                        </Border>
+
+                        <Label Text="{Binding Name}"
+                               Style="{StaticResource Heading2}"
+                               Margin="0,12,0,0"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding RoleText}"
+                               Style="{StaticResource ProfileRole}"
+                               Margin="0,2,0,0"
+                               HorizontalOptions="Center" />
+                        <HorizontalStackLayout Margin="0,6,0,0"
+                                               Spacing="5"
+                                               HorizontalOptions="Center">
+                            <Image Source="icon_pin_green_14.png"
+                                   WidthRequest="14"
+                                   HeightRequest="14"
+                                   VerticalOptions="Center" />
+                            <Label Text="{Binding City}" Style="{StaticResource LocationGreen}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Trois cartes de chiffres -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="20,22,20,0">
+                        <Border Grid.Column="0" Style="{StaticResource StatCardBorder}">
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding DonationsCount}" Style="{StaticResource StatNumber}" />
+                                <Label Text="Dons effectués" Style="{StaticResource StatLabel}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource StatCardBorder}">
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding MissionsCount}" Style="{StaticResource StatNumber}" />
+                                <Label Text="Missions bénévoles" Style="{StaticResource StatLabel}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource StatCardBorder}">
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding FollowedCount}" Style="{StaticResource StatNumber}" />
+                                <Label Text="Orphelinats suivis" Style="{StaticResource StatLabel}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- Mon impact -->
+                    <Label Text="Mon impact"
+                           Style="{StaticResource SectionTitle}"
+                           Margin="20,24,20,10" />
+                    <Border Style="{StaticResource InfoBoxBorder}" Margin="20,0">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                            <Image Grid.Column="0"
+                                   Source="icon_heart_impact.png"
+                                   WidthRequest="34"
+                                   HeightRequest="34"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1" Style="{StaticResource ImpactText}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding ImpactBefore}" Style="{StaticResource ImpactSpan}" />
+                                        <Span Text="{Binding ImpactBold}" Style="{StaticResource ImpactSpanBold}" />
+                                        <Span Text="{Binding ImpactAfter}" Style="{StaticResource ImpactSpan}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Border>
+
+                    <components:PrimaryButton Text="{Binding ButtonText}"
+                                              Command="{Binding ActionCommand}"
+                                              Margin="20,20,20,0" />
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Roue de reglages -->
+            <ImageButton Source="icon_settings.png"
+                         Padding="10"
+                         HorizontalOptions="End"
+                         VerticalOptions="Start"
+                         Margin="0,8,16,0"
+                         Command="{Binding SettingsCommand}"
+                         SemanticProperties.Description="Réglages" />
+        </Grid>
+
+        <!-- Barre d'onglets -->
+        <components:DonorTabBar Grid.Row="1" ActiveTab="Profile" />
+    </Grid>
+</ContentPage>

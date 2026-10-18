@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="KindHome.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:KindHome.Views"
+    Title="KindHome"
+    FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+
+    <!-- Pages normales -->
+    <ShellContent Title="Bienvenue" Route="OnboardingPage" ContentTemplate="{DataTemplate views:OnboardingPage}" />
+    <ShellContent Title="Connexion" Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Barre d'onglets donateur et bénévole -->
+    <!-- La barre native est masquee dans chaque page (Shell.TabBarIsVisible) : les pages d'onglets dessinent leur propre barre (DonorTabBar) -->
+    <TabBar Route="DonorTabs">
+        <Tab Title="Accueil">
+            <ShellContent Route="HomePage" ContentTemplate="{DataTemplate views:HomePage}" />
+        </Tab>
+        <Tab Title="Carte">
+            <ShellContent Route="DirectoryPage" ContentTemplate="{DataTemplate views:DirectoryPage}" />
+        </Tab>
+        <Tab Title="Besoins">
+            <ShellContent Route="NeedsPage" ContentTemplate="{DataTemplate views:NeedsPage}" />
+        </Tab>
+        <Tab Title="Profil">
+            <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate views:ProfilePage}" />
+        </Tab>
+    </TabBar>
+
+    <!-- Barre d'onglets organisation -->
+    <TabBar Route="OrgTabs">
+        <Tab Title="Accueil">
+            <ShellContent Route="OrgDashboardPage" ContentTemplate="{DataTemplate views:OrgDashboardPage}" />
+        </Tab>
+        <Tab Title="Besoins">
+            <ShellContent Route="OrgNeedsPage" ContentTemplate="{DataTemplate views:OrgNeedsPage}" />
+        </Tab>
+        <Tab Title="Bénévoles">
+            <ShellContent Route="OrgVolunteersPage" ContentTemplate="{DataTemplate views:OrgVolunteersPage}" />
+        </Tab>
+        <Tab Title="Dons">
+            <ShellContent Route="OrgDonationsPage" ContentTemplate="{DataTemplate views:OrgDonationsPage}" />
+        </Tab>
+        <Tab Title="Profil">
+            <ShellContent Route="OrgProfilePage" ContentTemplate="{DataTemplate views:OrgProfilePage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

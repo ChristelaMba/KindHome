@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.TextArea"
+             x:DataType="components:TextArea"
+             x:Name="Root">
+    <VerticalStackLayout>
+
+        <!-- Libelle au-dessus de la zone -->
+        <Label x:Name="TitleLabel"
+               Style="{StaticResource FieldLabel}"
+               Margin="0,0,0,4"
+               IsVisible="False" />
+
+        <Border x:Name="Box"
+                Style="{StaticResource TextAreaBorder}"
+                HeightRequest="{Binding BoxHeight, Source={x:Reference Root}}">
+            <Editor Text="{Binding Text, Source={x:Reference Root}}"
+                    Placeholder="{Binding Placeholder, Source={x:Reference Root}}"
+                    MaxLength="{Binding MaxLength, Source={x:Reference Root}}"
+                    AutoSize="Disabled"
+                    IsSpellCheckEnabled="False" />
+        </Border>
+
+    </VerticalStackLayout>
+</ContentView>

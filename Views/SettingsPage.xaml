@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="Réglages"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">    <Grid RowDefinitions="Auto,*">
+        <!-- Barre du haut -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="4"
+              Padding="14,0,20,0">
+            <ImageButton Grid.Column="0"
+                         Source="icon_arrow_left.png"
+                         Padding="10"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <Label Grid.Column="1"
+                   Text="Réglages"
+                   Style="{StaticResource TopBarTitle}" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,8,20,24">
+
+                <!-- Mon compte : lecture seule -->
+                <Label Text="Mon compte" Style="{StaticResource SectionTitle}" Margin="0,0,0,10" />
+                <Border Style="{StaticResource CardBorder}" Padding="18,6">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" MinimumHeightRequest="48">
+                            <Label Grid.Column="0" Text="{Binding NameLabel}" Style="{StaticResource SummaryLabel}" />
+                            <Label Grid.Column="1" Text="{Binding NameText}" Style="{StaticResource SummaryValue}" />
+                        </Grid>
+                        <BoxView Style="{StaticResource DividerLine}" />
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" MinimumHeightRequest="48">
+                            <Label Grid.Column="0" Text="E-mail" Style="{StaticResource SummaryLabel}" />
+                            <Label Grid.Column="1" Text="{Binding EmailText}" Style="{StaticResource SummaryValue}" />
+                        </Grid>
+                        <BoxView Style="{StaticResource DividerLine}" />
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" MinimumHeightRequest="48">
+                            <Label Grid.Column="0" Text="Téléphone" Style="{StaticResource SummaryLabel}" />
+                            <Label Grid.Column="1" Text="{Binding PhoneText}" Style="{StaticResource SummaryValue}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Preferences -->
+                <Label Text="Préférences" Style="{StaticResource SectionTitle}" Margin="0,24,0,10" />
+                <Border Style="{StaticResource CardBorder}" Padding="18,6">
+                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="48">
+                        <Label Grid.Column="0" Text="Notifications" Style="{StaticResource SummaryLabel}" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding NotificationsOn}"
+                                VerticalOptions="Center"
+                                SemanticProperties.Description="Notifications" />
+                    </Grid>
+                </Border>
+
+                <!-- A propos -->
+                <Label Text="À propos" Style="{StaticResource SectionTitle}" Margin="0,24,0,10" />
+                <Border Style="{StaticResource CardBorder}" Padding="18,6">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" MinimumHeightRequest="48">
+                            <Label Grid.Column="0" Text="Version de l'application" Style="{StaticResource SummaryLabel}" />
+                            <Label Grid.Column="1" Text="1.0" Style="{StaticResource SummaryValue}" />
+                        </Grid>
+                        <BoxView Style="{StaticResource DividerLine}" />
+                        <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="48">
+                            <Label Grid.Column="0" Text="Conditions d'utilisation" Style="{StaticResource SummaryLabel}" />
+                            <Image Grid.Column="1"
+                                   Source="icon_chevron_right_muted.png"
+                                   WidthRequest="14"
+                                   HeightRequest="14"
+                                   VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TermsCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        <BoxView Style="{StaticResource DividerLine}" />
+                        <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="48">
+                            <Label Grid.Column="0" Text="Charte de protection de l'enfant" Style="{StaticResource SummaryLabel}" />
+                            <Image Grid.Column="1"
+                                   Source="icon_chevron_right_muted.png"
+                                   WidthRequest="14"
+                                   HeightRequest="14"
+                                   VerticalOptions="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CharterCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Deconnexion -->
+                <components:SecondaryButton Margin="0,28,0,0"
+                                            Text="{Binding SignOutText}"
+                                            IsError="True"
+                                            Command="{Binding SignOutCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

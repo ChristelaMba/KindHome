@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KindHome.Views.Components.OrgTabBar">
+    <!-- Meme barre que celle du donateur, avec 5 onglets et des marges 8 / 8 / 20 -->
+    <Border Style="{StaticResource TabBarBorder}"
+            SafeAreaEdges="Container">
+        <Grid ColumnDefinitions="*,*,*,*,*"
+              HeightRequest="84"
+              Padding="{StaticResource TabBarPaddingOrganization}">
+            <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center"
+                                 SemanticProperties.Description="Accueil">
+                <Image x:Name="HomeIcon" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+                <Label x:Name="HomeLabel" Text="Accueil" Style="{StaticResource TabLabel}" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnHomeTapped" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center"
+                                 SemanticProperties.Description="Besoins">
+                <Image x:Name="NeedsIcon" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+                <Label x:Name="NeedsLabel" Text="Besoins" Style="{StaticResource TabLabel}" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNeedsTapped" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center"
+                                 SemanticProperties.Description="Bénévoles">
+                <Image x:Name="VolunteersIcon" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+                <Label x:Name="VolunteersLabel" Text="Bénévoles" Style="{StaticResource TabLabel}" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVolunteersTapped" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="3" Spacing="4" VerticalOptions="Center"
+                                 SemanticProperties.Description="Dons">
+                <Image x:Name="DonationsIcon" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+                <Label x:Name="DonationsLabel" Text="Dons" Style="{StaticResource TabLabel}" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDonationsTapped" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="4" Spacing="4" VerticalOptions="Center"
+                                 SemanticProperties.Description="Profil">
+                <Image x:Name="ProfileIcon" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" />
+                <Label x:Name="ProfileLabel" Text="Profil" Style="{StaticResource TabLabel}" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnProfileTapped" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>

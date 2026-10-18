@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.OrgDashboardPage"
+             x:DataType="vm:OrgDashboardViewModel"
+             Title="Espace organisation"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <!-- Contenu : respecte la barre d'etat en haut, defile si l'ecran est petit -->
+        <Grid Grid.Row="0" SafeAreaEdges="Container,Container,Container,None">
+            <ScrollView>
+                <VerticalStackLayout Padding="0,4,0,16">
+
+                    <!-- Logo, nom, cloche -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="20,0,16,0">
+                        <Border Grid.Column="0"
+                                Style="{StaticResource OrganizationLogoCircle}"
+                                VerticalOptions="Center">
+                            <Image Source="logo_org_house.png"
+                                   WidthRequest="34"
+                                   HeightRequest="34"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   SemanticProperties.Description="Logo de l'organisation" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="{Binding OrgName}" Style="{StaticResource OrganizationName}" />
+                            <Label Text="Espace organisation" Style="{StaticResource Caption}" />
+                        </VerticalStackLayout>
+                        <ImageButton Grid.Column="2"
+                                     Source="icon_bell.png"
+                                     Padding="10"
+                                     VerticalOptions="Center"
+                                     Command="{Binding NotificationsCommand}"
+                                     SemanticProperties.Description="Notifications" />
+                    </Grid>
+
+                    <!-- Vue d'ensemble -->
+                    <Border Style="{StaticResource OverviewCardBorder}" Margin="20,16,20,0">
+                        <VerticalStackLayout>
+                            <Label Text="Vue d'ensemble"
+                                   Style="{StaticResource OverviewTitle}"
+                                   Margin="10,0" />
+                            <Grid ColumnDefinitions="*,Auto,*,Auto,*" Margin="0,12,0,0">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="{Binding Children}" Style="{StaticResource StatNumber}" />
+                                    <Label Text="Enfants" Style="{StaticResource StatLabel}" />
+                                </VerticalStackLayout>
+                                <BoxView Grid.Column="1" Style="{StaticResource DividerStatLine}" />
+                                <VerticalStackLayout Grid.Column="2" Spacing="2">
+                                    <Label Text="{Binding Volunteers}" Style="{StaticResource StatNumber}" />
+                                    <Label Text="Bénévoles" Style="{StaticResource StatLabel}" />
+                                </VerticalStackLayout>
+                                <BoxView Grid.Column="3" Style="{StaticResource DividerStatLine}" />
+                                <VerticalStackLayout Grid.Column="4" Spacing="2">
+                                    <Label Text="{Binding DonationsThisMonth}" Style="{StaticResource StatNumber}" />
+                                    <Label Text="Dons ce mois" Style="{StaticResource StatLabel}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Mes besoins (quand l'organisation a des besoins) -->
+                    <VerticalStackLayout IsVisible="{Binding HasNeeds}">
+
+                        <!-- Mes besoins -->
+                        <Grid ColumnDefinitions="*,Auto" Margin="20,18,20,4">
+                            <Label Grid.Column="0"
+                                   Text="Mes besoins"
+                                   Style="{StaticResource SectionTitle}"
+                                   VerticalOptions="Center" />
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Spacing="2"
+                                                   HeightRequest="44"
+                                                   SemanticProperties.Description="Voir tous les besoins">
+                                <Label Text="Voir tout" Style="{StaticResource LinkMuted}" />
+                                <Image Source="icon_chevron_right_muted.png"
+                                       WidthRequest="14"
+                                       HeightRequest="14"
+                                       VerticalOptions="Center" />
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToNeedsCommand}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <Border Style="{StaticResource CardBorder}" Margin="20,0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border Grid.Column="0"
+                                        StrokeShape="RoundRectangle 14"
+                                        StrokeThickness="0"
+                                        WidthRequest="52"
+                                        HeightRequest="56"
+                                        VerticalOptions="Center">
+                                    <Grid BackgroundColor="{StaticResource IconTileBackground}">
+                                        <Image Source="{Binding FeaturedNeed.Photo}"
+                                               Aspect="AspectFill"
+                                               IsVisible="{Binding FeaturedNeed.HasPhoto}" />
+                                        <Image Source="icon_archive.png"
+                                               WidthRequest="30"
+                                               HeightRequest="30"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"
+                                               IsVisible="{Binding FeaturedNeed.HasNoPhoto}" />
+                                    </Grid>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding FeaturedNeed.Title}" Style="{StaticResource CardTitleSmall}" />
+                                    <Label Text="{Binding FeaturedNeed.ProgressText}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0" />
+                                    <components:NeedProgressBar Progress="{Binding FeaturedNeed.Progress}"
+                                                                Size="Small"
+                                                                Margin="0,6,0,0" />
+                                </VerticalStackLayout>
+                                <Image Grid.Column="2"
+                                       Source="icon_chevron_right.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToNeedsCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <!-- Aucun besoin publie (a la place de Mes besoins, sous la vue d'ensemble) -->
+                    <VerticalStackLayout IsVisible="{Binding HasNoNeeds}">
+                        <Label Text="Mes besoins"
+                               Style="{StaticResource SectionTitle}"
+                               Margin="20,18,20,0" />
+                        <components:EmptyState Icon="icon_archive_plus.png"
+                                               Title="Aucun besoin publié"
+                                               Message="Publiez ce dont vos enfants ont besoin pour que les donateurs puissent vous aider."
+                                               ButtonText="Publier un besoin"
+                                               Command="{Binding PublishCommand}"
+                                               Margin="20,40,20,0" />
+                    </VerticalStackLayout>
+
+                    <!-- Demandes et dons (quand l'organisation a des donnees) -->
+                    <VerticalStackLayout IsVisible="{Binding HasOrgData}">
+
+                        <!-- Demandes de benevolat -->
+                        <Grid ColumnDefinitions="*,Auto" Margin="20,14,20,4">
+                            <Label Grid.Column="0"
+                                   Text="Demandes de bénévolat"
+                                   Style="{StaticResource SectionTitle}"
+                                   VerticalOptions="Center" />
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Spacing="2"
+                                                   HeightRequest="44"
+                                                   SemanticProperties.Description="Voir toutes les demandes">
+                                <Label Text="Voir tout" Style="{StaticResource LinkMuted}" />
+                                <Image Source="icon_chevron_right_muted.png"
+                                       WidthRequest="14"
+                                       HeightRequest="14"
+                                       VerticalOptions="Center" />
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToVolunteersCommand}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <Border Style="{StaticResource CardBorder}" Margin="20,0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconTileSmallBorder}"
+                                        VerticalOptions="Center">
+                                    <Image Source="icon_people_tile.png"
+                                           WidthRequest="26"
+                                           HeightRequest="26"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding VolunteerTitle}" Style="{StaticResource CardTitleSmall}" />
+                                    <Label Text="{Binding VolunteerSubtitle}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0" />
+                                </VerticalStackLayout>
+                                <Image Grid.Column="2"
+                                       Source="icon_chevron_right.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToVolunteersCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- Dons recus -->
+                        <Grid ColumnDefinitions="*,Auto" Margin="20,14,20,4">
+                            <Label Grid.Column="0"
+                                   Text="Dons reçus"
+                                   Style="{StaticResource SectionTitle}"
+                                   VerticalOptions="Center" />
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Spacing="2"
+                                                   HeightRequest="44"
+                                                   SemanticProperties.Description="Voir tous les dons">
+                                <Label Text="Voir tout" Style="{StaticResource LinkMuted}" />
+                                <Image Source="icon_chevron_right_muted.png"
+                                       WidthRequest="14"
+                                       HeightRequest="14"
+                                       VerticalOptions="Center" />
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToDonationsCommand}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <Border Style="{StaticResource CardBorder}" Margin="20,0">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border Grid.Column="0"
+                                        StrokeShape="RoundRectangle 14"
+                                        StrokeThickness="0"
+                                        WidthRequest="52"
+                                        HeightRequest="56"
+                                        VerticalOptions="Center">
+                                    <Image Source="{Binding LastDonationNeed.Photo}" Aspect="AspectFill" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding LastDonationNeed.Title}" Style="{StaticResource CardTitleSmall}" />
+                                    <Label Text="{Binding LastDonationSubtitle}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0" />
+                                </VerticalStackLayout>
+                                <Image Grid.Column="2"
+                                       Source="icon_chevron_right.png"
+                                       WidthRequest="20"
+                                       HeightRequest="20"
+                                       VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToDonationsCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- Barre d'onglets de l'organisation -->
+        <components:OrgTabBar Grid.Row="1" ActiveTab="Home" />
+    </Grid>
+</ContentPage>

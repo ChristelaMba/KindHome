@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.PublishNeedPage"
+             x:DataType="vm:PublishNeedViewModel"
+             Title="Publier un besoin"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Barre du haut -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="4"
+              Padding="14,0,20,0">
+            <ImageButton Grid.Column="0"
+                         Source="icon_arrow_left.png"
+                         Padding="10"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <Label Grid.Column="1"
+                   Text="Publier un besoin"
+                   Style="{StaticResource TopBarTitle}" />
+        </Grid>
+
+        <!-- Formulaire : defile quand le clavier est ouvert -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,8,20,20">
+
+                <!-- Echec de l'envoi : bandeau rouge en haut -->
+                <Border Style="{StaticResource ErrorBannerBorder}"
+                        Margin="0,0,0,14"
+                        IsVisible="{Binding ShowFailure}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Image Grid.Column="0"
+                               Source="icon_alert_circle.png"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               VerticalOptions="Start"
+                               Margin="0,1,0,0" />
+                        <Label Grid.Column="1"
+                               Text="Votre besoin n'a pas pu être publié. Vos informations sont conservées."
+                               Style="{StaticResource ErrorBannerText}" />
+                    </Grid>
+                </Border>
+
+                <components:FormField Title="Titre du besoin"
+                                      Placeholder="Ex : Riz"
+                                      Text="{Binding Title}"
+                                      ErrorMessage="{Binding TitleError}" />
+
+                <!-- Categorie : une seule, aucune au depart -->
+                <Label Text="Catégorie"
+                       Style="{StaticResource FieldLabel}"
+                       Margin="0,18,0,4" />
+                <FlexLayout Wrap="Wrap"
+                            Direction="Row"
+                            AlignItems="Start"
+                            JustifyContent="Start"
+                            BindableLayout.ItemsSource="{Binding Categories}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ChipItem">
+                            <components:ChoiceChip Margin="0,0,4,4"
+                                                   Text="{Binding Name}"
+                                                   IsSelected="{Binding IsSelected}"
+                                                   IsError="{Binding IsError}"
+                                                   CommandParameter="{Binding .}"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PublishNeedViewModel}}, Path=SelectCategoryCommand}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+                <Label Text="{Binding CategoryError}"
+                       Style="{StaticResource ChipGroupError}"
+                       Margin="6,-4,0,0"
+                       IsVisible="{Binding HasCategoryError}" />
+
+                <components:FormField Margin="0,14,0,0"
+                                      Title="Quantité nécessaire"
+                                      Placeholder="Ex : 20"
+                                      Keyboard="Numeric"
+                                      Text="{Binding Quantity}"
+                                      ErrorMessage="{Binding QuantityError}" />
+
+                <components:FormField Margin="0,18,0,0"
+                                      Title="Unité"
+                                      Placeholder="unités, kits, sacs..."
+                                      Text="{Binding Unit}"
+                                      ErrorMessage="{Binding UnitError}" />
+
+                <components:TextArea Margin="0,18,0,0"
+                                     Title="Pourquoi c'est important ?"
+                                     Placeholder="Expliquez en quelques mots pourquoi ce besoin est important"
+                                     BoxHeight="76"
+                                     MaxLength="300"
+                                     Text="{Binding Why}" />
+                <Label Text="{Binding WhyCounter}"
+                       Style="{StaticResource CharCounter}"
+                       Margin="0,2,0,0" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bouton du bas, fixe -->
+        <Grid Grid.Row="2" Padding="20,8,20,20">
+            <components:PrimaryButton Text="{Binding ButtonText}"
+                                      IsBusy="{Binding IsBusy}"
+                                      Command="{Binding PublishCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

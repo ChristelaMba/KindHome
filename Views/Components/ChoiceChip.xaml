@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.ChoiceChip"
+             x:DataType="components:ChoiceChip"
+             x:Name="Root">
+    <!-- Le texte invisible (Sizer) donne sa largeur a la puce ; le bouton la remplit -->
+    <Grid>
+        <Label x:Name="Sizer"
+               Style="{StaticResource ChipSizerLabel}"
+               Text="{Binding Text, Source={x:Reference Root}}" />
+        <Button x:Name="Inner"
+                Style="{StaticResource ChipButton}"
+                Text="{Binding Text, Source={x:Reference Root}}"
+                Command="{Binding Command, Source={x:Reference Root}}"
+                CommandParameter="{Binding CommandParameter, Source={x:Reference Root}}"
+                Clicked="OnInnerClicked" />
+    </Grid>
+</ContentView>

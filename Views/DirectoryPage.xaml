@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.DirectoryPage"
+             x:DataType="vm:DirectoryViewModel"
+             Title="Orphelinats à proximité"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <!-- Contenu : respecte la barre d'etat en haut -->
+        <Grid Grid.Row="0"
+              RowDefinitions="Auto,*"
+              SafeAreaEdges="Container,Container,Container,None">
+
+            <!-- Barre du haut -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="Auto,*"
+                  ColumnSpacing="4"
+                  Padding="14,0,20,0">
+                <ImageButton Grid.Column="0"
+                             Source="icon_arrow_left.png"
+                             Padding="10"
+                             Command="{Binding BackCommand}"
+                             SemanticProperties.Description="Retour" />
+                <Label Grid.Column="1"
+                       Text="Orphelinats à proximité"
+                       Style="{StaticResource TopBarTitleSmall}" />
+            </Grid>
+
+            <!-- Chargement de la carte -->
+            <VerticalStackLayout Grid.Row="1"
+                                 Padding="20,14,20,0"
+                                 Spacing="14"
+                                 IsVisible="{Binding ShowLoading}">
+                <Border Style="{StaticResource SkeletonBlock}"
+                        StrokeShape="RoundRectangle 24"
+                        HeightRequest="48" />
+                <Border Style="{StaticResource SkeletonBlock}"
+                        StrokeShape="RoundRectangle 22"
+                        HeightRequest="200">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                        <Image Source="icon_spinner_green.png"
+                               WidthRequest="32"
+                               HeightRequest="32"
+                               HorizontalOptions="Center" />
+                        <Label Text="Chargement de la carte"
+                               Style="{StaticResource CardTitleSmall}"
+                               TextColor="{StaticResource TextSoft}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <VerticalStackLayout Spacing="14" Margin="0,2,0,0">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" Style="{StaticResource SkeletonBlock}" WidthRequest="56" HeightRequest="56" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                            <Border Style="{StaticResource SkeletonBlock}" StrokeShape="RoundRectangle 7" HeightRequest="14" WidthRequest="220" HorizontalOptions="Start" />
+                            <Border Style="{StaticResource SkeletonBlock}" StrokeShape="RoundRectangle 6" HeightRequest="12" WidthRequest="140" HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" Style="{StaticResource SkeletonBlock}" WidthRequest="56" HeightRequest="56" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                            <Border Style="{StaticResource SkeletonBlock}" StrokeShape="RoundRectangle 7" HeightRequest="14" WidthRequest="190" HorizontalOptions="Start" />
+                            <Border Style="{StaticResource SkeletonBlock}" StrokeShape="RoundRectangle 6" HeightRequest="12" WidthRequest="125" HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" Style="{StaticResource SkeletonBlock}" WidthRequest="56" HeightRequest="56" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                            <Border Style="{StaticResource SkeletonBlock}" StrokeShape="RoundRectangle 7" HeightRequest="14" WidthRequest="235" HorizontalOptions="Start" />
+                            <Border Style="{StaticResource SkeletonBlock}" StrokeShape="RoundRectangle 6" HeightRequest="12" WidthRequest="155" HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Localisation desactivee -->
+            <VerticalStackLayout Grid.Row="1"
+                                 VerticalOptions="Center"
+                                 Spacing="12"
+                                 Padding="28,0"
+                                 IsVisible="{Binding ShowDenied}">
+                <Border Style="{StaticResource StateIconCircleError}" HorizontalOptions="Center">
+                    <Image Source="icon_pin_off.png"
+                           WidthRequest="44"
+                           HeightRequest="44"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+                <Label Text="Localisation désactivée" Style="{StaticResource StateTitle}" />
+                <Label Text="Activez la localisation pour voir les orphelinats proches, ou saisissez votre ville."
+                       Style="{StaticResource StateText}" />
+                <Border Style="{StaticResource FieldBorder}"
+                        HeightRequest="48"
+                        Margin="0,6,0,0">
+                    <Label Text="Ville : Douala"
+                           Style="{StaticResource SearchPlaceholder}"
+                           TextColor="{StaticResource TextSecondary}" />
+                </Border>
+                <components:PrimaryButton Text="Rechercher à Douala"
+                                          Compact="True"
+                                          Command="{Binding UseCityCommand}" />
+                <components:SecondaryButton Text="Activer la localisation"
+                                            Compact="True"
+                                            Command="{Binding UseCityCommand}" />
+            </VerticalStackLayout>
+
+            <!-- Annuaire : recherche, carte, liste -->
+            <Grid Grid.Row="1"
+                  RowDefinitions="Auto,*"
+                  IsVisible="{Binding ShowMain}">
+
+                <!-- Recherche -->
+                <Border Grid.Row="0"
+                        Style="{StaticResource SearchBarBorder}"
+                        Margin="20,2,20,0">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Image Grid.Column="0"
+                               Source="icon_search.png"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               VerticalOptions="Center" />
+                        <Entry Grid.Column="1"
+                               Style="{StaticResource SearchEntry}"
+                               Placeholder="Rechercher dans cette zone"
+                               IsSpellCheckEnabled="False"
+                               ReturnType="Search"
+                               VerticalOptions="Center"
+                               Text="{Binding SearchText}"
+                               SemanticProperties.Description="Rechercher dans cette zone" />
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1">
+
+                    <!-- Carte dessinee (reperes ajoutes par le code de la page) -->
+                    <Grid x:Name="MapArea"
+                          Margin="0,12,0,0"
+                          VerticalOptions="Start"
+                          HeightRequest="252"
+                          BackgroundColor="{StaticResource MapBackground}"
+                          IsClippedToBounds="True"
+                          IsVisible="{Binding ShowMap}">
+                        <AbsoluteLayout x:Name="MapCanvas"
+                                        WidthRequest="390"
+                                        HeightRequest="252"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                            <Image Source="map_douala.png"
+                                   Aspect="Fill"
+                                   AbsoluteLayout.LayoutBounds="0,0,390,252"
+                                   SemanticProperties.Description="Carte de Douala" />
+                            <Label Text="Douala"
+                                   Style="{StaticResource MapLabel}"
+                                   AbsoluteLayout.LayoutBounds="110,200,80,24" />
+                        </AbsoluteLayout>
+
+                        <Border x:Name="LocateButton"
+                                Style="{StaticResource MapLocateButtonBorder}"
+                                HorizontalOptions="End"
+                                VerticalOptions="End"
+                                Margin="0,0,16,16"
+                                SemanticProperties.Description="Recentrer sur ma position">
+                            <Image Source="icon_locate.png"
+                                   WidthRequest="22"
+                                   HeightRequest="22"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LocateCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+
+                    <!-- Panneau de la liste (par-dessus le bas de la carte) -->
+                    <Border Style="{StaticResource ListSheetBorder}"
+                            Margin="0,248,0,0"
+                            IsVisible="{Binding ShowList}">
+                        <ScrollView x:Name="ListScroll">
+                            <VerticalStackLayout x:Name="ListStack"
+                                                 Padding="0,0,0,76"
+                                                 BindableLayout.ItemsSource="{Binding Results}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:DirectoryItem">
+                                        <Grid ColumnDefinitions="Auto,*,Auto"
+                                              ColumnSpacing="12"
+                                              Padding="0,10">
+                                            <Grid.Triggers>
+                                                <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource SoftGreenBackground}" />
+                                                </DataTrigger>
+                                            </Grid.Triggers>
+                                            <Border Grid.Column="0"
+                                                    StrokeShape="RoundRectangle 12"
+                                                    StrokeThickness="0"
+                                                    WidthRequest="64"
+                                                    HeightRequest="56"
+                                                    VerticalOptions="Center">
+                                                <Image Source="{Binding Orphanage.Photo}" Aspect="AspectFill" />
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Orphanage.Name}" Style="{StaticResource CardTitle}" />
+                                                <Label Text="{Binding Orphanage.LocationText}"
+                                                       Style="{StaticResource CardSubtitle}"
+                                                       Margin="0,2,0,0" />
+                                                <HorizontalStackLayout Margin="0,4,0,0" Spacing="5">
+                                                    <Image Source="icon_pin_green.png"
+                                                           WidthRequest="13"
+                                                           HeightRequest="13"
+                                                           VerticalOptions="Center" />
+                                                    <Label Text="{Binding Orphanage.ChildrenText}"
+                                                           Style="{StaticResource MetaGreen}"
+                                                           VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                            <Image Grid.Column="2"
+                                                   Source="icon_chevron_right.png"
+                                                   WidthRequest="20"
+                                                   HeightRequest="20"
+                                                   VerticalOptions="Center" />
+                                            <BoxView Grid.ColumnSpan="3"
+                                                     Style="{StaticResource DividerLine}"
+                                                     VerticalOptions="End"
+                                                     Margin="0,0,0,-10"
+                                                     IsVisible="{Binding ShowDivider}" />
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DirectoryViewModel}}, Path=OpenCommand}"
+                                                                      CommandParameter="{Binding Orphanage}" />
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </ScrollView>
+                    </Border>
+
+                    <!-- Aucun resultat -->
+                    <VerticalStackLayout Margin="20,14,20,0"
+                                         Spacing="14"
+                                         IsVisible="{Binding ShowEmpty}">
+                        <Border StrokeShape="RoundRectangle 22"
+                                StrokeThickness="0"
+                                HeightRequest="120"
+                                BackgroundColor="{StaticResource TagBackground}">
+                            <Image Source="icon_pin_muted_32.png"
+                                   WidthRequest="32"
+                                   HeightRequest="32"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <components:EmptyState Margin="0,78,0,0"
+                                               Title="Aucun orphelinat dans cette zone"
+                                               Message="Essayez d'élargir le rayon de recherche ou de déplacer la carte."
+                                               ButtonText="Élargir la zone"
+                                               Command="{Binding ClearSearchCommand}" />
+                    </VerticalStackLayout>
+
+                    <!-- Selecteur Liste / Carte -->
+                    <Border Style="{StaticResource SegmentedBorder}"
+                            Margin="20,0,20,12"
+                            VerticalOptions="End"
+                            IsVisible="{Binding ShowMap}">
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
+                            <Button x:Name="ListButton"
+                                    Grid.Column="0"
+                                    Style="{StaticResource SegmentButtonSelected}"
+                                    Text="Liste"
+                                    ImageSource="icon_list_white.png"
+                                    ContentLayout="Left,8"
+                                    Command="{Binding ShowListCommand}" />
+                            <Button x:Name="MapButton"
+                                    Grid.Column="1"
+                                    Style="{StaticResource SegmentButton}"
+                                    Text="Carte"
+                                    ImageSource="icon_map_dark.png"
+                                    ContentLayout="Left,8"
+                                    Command="{Binding ShowMapCommand}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!-- Barre d'onglets -->
+        <components:DonorTabBar Grid.Row="1" ActiveTab="Directory" />
+    </Grid>
+</ContentPage>

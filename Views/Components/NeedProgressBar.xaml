@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KindHome.Views.Components.NeedProgressBar">
+    <!-- Barre de progression : un fond et un remplissage dont la largeur suit Progress -->
+    <Grid x:Name="Host" SizeChanged="OnHostSizeChanged">
+        <Border x:Name="Track" Style="{StaticResource ProgressTrackSmall}" />
+        <Border x:Name="Fill" Style="{StaticResource ProgressFillSmall}" />
+    </Grid>
+</ContentView>

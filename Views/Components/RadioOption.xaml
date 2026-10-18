@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.RadioOption"
+             x:DataType="components:RadioOption"
+             x:Name="Root">
+    <!-- Option radio en forme de pilule : cercle, texte, fond vert clair quand elle est choisie -->
+    <Border x:Name="Box" Style="{StaticResource RadioOptionBorder}">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border x:Name="Ring"
+                    Grid.Column="0"
+                    Style="{StaticResource RadioRing}"
+                    VerticalOptions="Center">
+                <Border x:Name="Dot"
+                        Style="{StaticResource RadioDot}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        IsVisible="False" />
+            </Border>
+            <Label x:Name="TextLabel"
+                   Grid.Column="1"
+                   Style="{StaticResource RadioLabel}"
+                   Text="{Binding Text, Source={x:Reference Root}}"
+                   VerticalOptions="Center" />
+        </Grid>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Border.GestureRecognizers>
+    </Border>
+</ContentView>

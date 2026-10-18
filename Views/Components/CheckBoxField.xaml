@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.CheckBoxField"
+             x:DataType="components:CheckBoxField"
+             x:Name="Root">
+    <VerticalStackLayout>
+
+        <Grid ColumnDefinitions="Auto,*"
+              ColumnSpacing="10"
+              MinimumHeightRequest="44">
+            <Border x:Name="Box"
+                    Grid.Column="0"
+                    Style="{StaticResource CheckBoxBox}"
+                    VerticalOptions="Center">
+                <Image x:Name="CheckIcon"
+                       Source="icon_check.png"
+                       WidthRequest="14"
+                       HeightRequest="14"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       IsVisible="False" />
+            </Border>
+
+            <Label x:Name="TextLabel"
+                   Grid.Column="1"
+                   Style="{StaticResource CheckBoxText}"
+                   Text="{Binding Text, Source={x:Reference Root}}"
+                   VerticalOptions="Center" />
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <Label x:Name="ErrorLabel"
+               Style="{StaticResource ErrorText}"
+               IsVisible="False" />
+
+    </VerticalStackLayout>
+</ContentView>

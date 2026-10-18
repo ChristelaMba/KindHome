@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Title="Connexion"
+             SafeAreaEdges="All"
+             BackgroundColor="{StaticResource PageBackground}">
+    <ScrollView x:Name="Scroller">
+        <Grid x:Name="ContentGrid"
+              RowDefinitions="Auto,*,Auto"
+              Padding="24,0,24,8">
+
+            <VerticalStackLayout Grid.Row="0">
+
+                <!-- Logo -->
+                <VerticalStackLayout Margin="0,28,0,0"
+                                     Spacing="8"
+                                     HorizontalOptions="Center">
+                    <Image Source="logo_green.png"
+                           WidthRequest="64"
+                           HeightRequest="71.2"
+                           HorizontalOptions="Center"
+                           SemanticProperties.Description="Logo KindHome" />
+                    <Label Text="KindHome"
+                           Style="{StaticResource BrandName}"
+                           HorizontalOptions="Center" />
+                    <Label Text="Ensemble pour eux"
+                           Style="{StaticResource BrandTagline}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Titre -->
+                <VerticalStackLayout Margin="0,32,0,0" Spacing="4">
+                    <Label Text="Bon retour" Style="{StaticResource Heading1}" />
+                    <Label Text="Connectez-vous pour trouver un orphelinat près de chez vous."
+                           Style="{StaticResource Subtitle}" />
+                </VerticalStackLayout>
+
+                <!-- Formulaire -->
+                <VerticalStackLayout Margin="0,22,0,0" Spacing="14">
+                    <components:FormField Title="Adresse e-mail"
+                                          Placeholder="nom@exemple.com"
+                                          Icon="icon_mail.png"
+                                          ActiveIcon="icon_mail_green.png"
+                                          Keyboard="Email"
+                                          Text="{Binding Email}"
+                                          ErrorMessage="{Binding EmailError}" />
+
+                    <VerticalStackLayout>
+                        <components:FormField Title="Mot de passe"
+                                              Placeholder="Votre mot de passe"
+                                              Icon="icon_lock.png"
+                                              IsPassword="True"
+                                              Text="{Binding Password}"
+                                              ErrorMessage="{Binding PasswordError}"
+                                              Completed="OnPasswordCompleted" />
+                        <Grid HeightRequest="44"
+                              HorizontalOptions="End"
+                              SemanticProperties.Description="Mot de passe oublié">
+                            <Label Text="Mot de passe oublié ?" Style="{StaticResource LinkText}" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <components:PrimaryButton Text="{Binding ButtonText}"
+                                          Command="{Binding LoginCommand}" />
+
+                <!-- Separateur "ou" -->
+                <Grid Margin="0,12,0,0"
+                      ColumnDefinitions="*,Auto,*"
+                      ColumnSpacing="12">
+                    <BoxView Grid.Column="0" Style="{StaticResource DividerOr}" />
+                    <Label Grid.Column="1" Text="ou" Style="{StaticResource Caption}" />
+                    <BoxView Grid.Column="2" Style="{StaticResource DividerOr}" />
+                </Grid>
+
+                <components:SecondaryButton Text="Continuer sans compte"
+                                            Command="{Binding GuestCommand}"
+                                            Margin="0,12,0,0" />
+            </VerticalStackLayout>
+
+            <!-- Bas de page -->
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="Auto,Auto"
+                  ColumnSpacing="4"
+                  HeightRequest="44"
+                  HorizontalOptions="Center">
+                <Label Grid.Column="0"
+                       Text="Pas encore de compte ?"
+                       Style="{StaticResource Subtitle}"
+                       VerticalOptions="Center" />
+                <Grid Grid.Column="1"
+                      Padding="4,0"
+                      SemanticProperties.Description="Créer un compte">
+                    <Label Text="Créer un compte" Style="{StaticResource LinkTextBold}" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

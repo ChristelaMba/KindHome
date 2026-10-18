@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Toutes les couleurs viennent de la maquette HTML. Format MAUI : #AARRGGBB quand il y a de la transparence. -->
+
+    <!-- Verts -->
+    <Color x:Key="PrimaryGreen">#1F6B52</Color>
+    <Color x:Key="GreenGradientStart">#2B7C60</Color>
+    <Color x:Key="GreenGradientEnd">#1B6249</Color>
+    <Color x:Key="DeepGreen">#14493A</Color>
+    <Color x:Key="FocusRing">#D3E6DB</Color>
+
+    <!-- Textes -->
+    <Color x:Key="TextDark">#1B3A31</Color>
+    <Color x:Key="TextSoft">#3C554B</Color>
+    <Color x:Key="TextSecondary">#62756E</Color>
+    <Color x:Key="TextDisabled">#76857F</Color>
+    <Color x:Key="TextDisabledChip">#8A9892</Color>
+    <Color x:Key="PlaceholderGray">#757575</Color>
+    <Color x:Key="TextOnDark">#FFFFFF</Color>
+
+    <!-- Fonds et surfaces -->
+    <Color x:Key="PageBackground">#F5F6F1</Color>
+    <Color x:Key="SurfaceWhite">#FCFCF9</Color>
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="SoftGreenBackground">#EAF1EC</Color>
+    <Color x:Key="TagBackground">#E3EEE7</Color>
+    <Color x:Key="IconTileBackground">#DDEBE3</Color>
+    <Color x:Key="ChipBackground">#E7EBE4</Color>
+    <Color x:Key="ProgressTrack">#DCE9E1</Color>
+    <Color x:Key="DisabledFieldBackground">#ECEFE9</Color>
+    <Color x:Key="DisabledButtonBackground">#E4E8E3</Color>
+    <Color x:Key="SkeletonGray">#E3E8E1</Color>
+    <Color x:Key="TileRose">#F0E2EC</Color>
+    <Color x:Key="TileBeige">#EFEDE6</Color>
+
+    <!-- Bordures et separateurs -->
+    <Color x:Key="BorderField">#B4C4BB</Color>
+    <Color x:Key="BorderDisabled">#DCE3DD</Color>
+    <Color x:Key="DividerList">#E6EAE3</Color>
+    <Color x:Key="DividerTab">#E1E6DF</Color>
+    <Color x:Key="DividerStat">#C9D8CF</Color>
+    <Color x:Key="CheckboxBorder">#8FA69B</Color>
+    <Color x:Key="SpinnerTrack">#C5D8CC</Color>
+
+    <!-- Erreur -->
+    <Color x:Key="ErrorRed">#B3261E</Color>
+    <Color x:Key="ErrorBackground">#FBE9E7</Color>
+    <Color x:Key="ErrorTextDark">#7A1A14</Color>
+
+    <!-- Couleurs avec transparence (alpha converti : 0.92 = EB, 0.9 = E6, 0.85 = D9, 0.88 = E0, 0.8 = CC) -->
+    <Color x:Key="GlassSurface92">#EBFCFCF9</Color>
+    <Color x:Key="GlassSurface90">#E6FCFCF9</Color>
+    <Color x:Key="GlassSurface85">#D9FCFCF9</Color>
+    <Color x:Key="GlassSoftGreen90">#E6EAF1EC</Color>
+    <Color x:Key="GlassBorder80">#CCFFFFFF</Color>
+    <Color x:Key="GlassBorder90">#E6FFFFFF</Color>
+    <Color x:Key="OverlayButtonBackground">#E0FFFFFF</Color>
+    <Color x:Key="WhiteBadgeBackground">#38FFFFFF</Color>
+    <Color x:Key="WhiteBadgeBorder">#66FFFFFF</Color>
+    <Color x:Key="WhiteDotInactive">#73FFFFFF</Color>
+    <Color x:Key="OnboardingButtonBorder">#40FFFFFF</Color>
+    <Color x:Key="TextOnDarkSoft">#E6FFFFFF</Color>
+
+    <!-- Ombres : couleur de base (l'opacite est dans Styles.xaml) -->
+    <Color x:Key="ShadowGreen">#1F6B52</Color>
+    <Color x:Key="ShadowBlack">#000000</Color>
+    <Color x:Key="ShadowRed">#B3261E</Color>
+
+    <!-- Carte de Douala (dessin) -->
+    <Color x:Key="MapBackground">#E8EDE4</Color>
+    <Color x:Key="MapPosition">#2F6FDB</Color>
+
+    <!-- Pinceaux unis -->
+    <SolidColorBrush x:Key="DeepGreenBrush" Color="{StaticResource DeepGreen}"/>
+    <SolidColorBrush x:Key="DisabledButtonBrush" Color="{StaticResource DisabledButtonBackground}"/>
+    <SolidColorBrush x:Key="ShadowGreenBrush" Color="{StaticResource ShadowGreen}"/>
+    <SolidColorBrush x:Key="ShadowBlackBrush" Color="{StaticResource ShadowBlack}"/>
+    <SolidColorBrush x:Key="ShadowRedBrush" Color="{StaticResource ShadowRed}"/>
+
+    <!-- Degrades. CSS 90deg = gauche vers droite, 135deg = haut-gauche vers bas-droite, 180deg = haut vers bas -->
+    <LinearGradientBrush x:Key="PrimaryGradientBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="{StaticResource GreenGradientStart}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource GreenGradientEnd}" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PrimaryGradientDiagonalBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource GreenGradientStart}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource GreenGradientEnd}" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- Onboarding : photo 390 x 520, fondu vers le vert du fond -->
+    <LinearGradientBrush x:Key="OnboardingPhotoFadeBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#5914493A" Offset="0.0"/>
+        <GradientStop Color="#0014493A" Offset="0.22"/>
+        <GradientStop Color="#0014493A" Offset="0.42"/>
+        <GradientStop Color="#14493A" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- Accueil : carte "Besoin en cours", fondu de gauche (vert plein) vers la photo -->
+    <LinearGradientBrush x:Key="HomeNeedCardFadeBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#14493A" Offset="0.0"/>
+        <GradientStop Color="#E014493A" Offset="0.38"/>
+        <GradientStop Color="#0D14493A" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- Fiche orphelinat (hauteur 120) et detail du besoin (hauteur 110) : voile sombre en haut de la photo -->
+    <LinearGradientBrush x:Key="PhotoTopFadeLightBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#6614493A" Offset="0.0"/>
+        <GradientStop Color="#0014493A" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="PhotoTopFadeStrongBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#8C14493A" Offset="0.0"/>
+        <GradientStop Color="#0014493A" Offset="1.0"/>
+    </LinearGradientBrush>
+
+</ResourceDictionary>

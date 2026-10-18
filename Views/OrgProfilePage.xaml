@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.OrgProfilePage"
+             x:DataType="vm:OrgProfileViewModel"
+             Title="Profil"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <Grid Grid.Row="0" SafeAreaEdges="Container,Container,Container,None">
+            <ScrollView>
+                <VerticalStackLayout Padding="0,16,0,16">
+
+                    <!-- Logo, nom, role, lieu -->
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Border Style="{StaticResource AvatarLargeInitialCircle}"
+                                HorizontalOptions="Center"
+                                SemanticProperties.Description="Logo de l'organisation">
+                            <Image Source="logo_org_house.png"
+                                   WidthRequest="56"
+                                   HeightRequest="56"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="{Binding Name}"
+                               Style="{StaticResource Heading2}"
+                               Margin="0,12,0,0"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Organisation"
+                               Style="{StaticResource ProfileRole}"
+                               Margin="0,2,0,0"
+                               HorizontalOptions="Center" />
+                        <HorizontalStackLayout Margin="0,6,0,0"
+                                               Spacing="5"
+                                               HorizontalOptions="Center">
+                            <Image Source="icon_pin_green_14.png"
+                                   WidthRequest="14"
+                                   HeightRequest="14"
+                                   VerticalOptions="Center" />
+                            <Label Text="Douala, Cameroun" Style="{StaticResource LocationGreen}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Trois cartes de chiffres -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="20,22,20,0">
+                        <Border Grid.Column="0" Style="{StaticResource StatCardBorder}">
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Children}" Style="{StaticResource StatNumber}" />
+                                <Label Text="Enfants" Style="{StaticResource StatLabel}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource StatCardBorder}">
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Volunteers}" Style="{StaticResource StatNumber}" />
+                                <Label Text="Bénévoles" Style="{StaticResource StatLabel}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource StatCardBorder}">
+                            <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding DonationsThisMonth}" Style="{StaticResource StatNumber}" />
+                                <Label Text="Dons ce mois" Style="{StaticResource StatLabel}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- Encadre -->
+                    <Label Text="Ma structure"
+                           Style="{StaticResource SectionTitle}"
+                           Margin="20,24,20,10" />
+                    <Border Style="{StaticResource InfoBoxBorder}" Margin="20,0">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                            <Image Grid.Column="0"
+                                   Source="icon_heart_impact.png"
+                                   WidthRequest="34"
+                                   HeightRequest="34"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="Vos besoins publiés aident les donateurs à vous soutenir. Merci pour votre engagement !"
+                                   Style="{StaticResource ImpactText}" />
+                        </Grid>
+                    </Border>
+
+                    <components:PrimaryButton Text="Voir les notifications"
+                                              Command="{Binding NotificationsCommand}"
+                                              Margin="20,20,20,0" />
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Roue de reglages -->
+            <ImageButton Source="icon_settings.png"
+                         Padding="10"
+                         HorizontalOptions="End"
+                         VerticalOptions="Start"
+                         Margin="0,8,16,0"
+                         Command="{Binding SettingsCommand}"
+                         SemanticProperties.Description="Réglages" />
+        </Grid>
+
+        <components:OrgTabBar Grid.Row="1" ActiveTab="Profile" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.NotificationsPage"
+             x:DataType="vm:NotificationsViewModel"
+             Title="Notifications"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Barre du haut -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="4"
+              Padding="14,0,20,0">
+            <ImageButton Grid.Column="0"
+                         Source="icon_arrow_left.png"
+                         Padding="10"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <Label Grid.Column="1"
+                   Text="Notifications"
+                   Style="{StaticResource TopBarTitle}" />
+        </Grid>
+        <!-- Tout marquer comme lu -->
+        <Button Grid.Row="1"
+                Style="{StaticResource TextButton}"
+                Text="Tout marquer comme lu"
+                HorizontalOptions="End"
+                Margin="0,0,4,0"
+                Command="{Binding MarkAllCommand}"
+                IsVisible="{Binding HasItems}" />
+
+        <!-- Liste des notifications -->
+        <ScrollView Grid.Row="2" IsVisible="{Binding HasItems}">
+            <VerticalStackLayout Padding="20,8,20,24"
+                                 Spacing="12"
+                                 BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:NotificationItem">
+                        <Border Style="{StaticResource CardBorder}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border Grid.Column="0"
+                                        Style="{StaticResource IconTileSmallBorder}"
+                                        VerticalOptions="Center">
+                                    <Image Source="{Binding Icon}"
+                                           WidthRequest="22"
+                                           HeightRequest="22"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" Style="{StaticResource CardTitle}" />
+                                    <Label Text="{Binding Text}"
+                                           Style="{StaticResource CardSubtitle}"
+                                           Margin="0,2,0,0" />
+                                    <Label Text="{Binding TimeText}"
+                                           Style="{StaticResource CaptionSmall}"
+                                           Margin="0,6,0,0" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="2"
+                                        Style="{StaticResource UnreadDot}"
+                                        VerticalOptions="Start"
+                                        Margin="0,6,0,0"
+                                        IsVisible="{Binding IsUnread}"
+                                        SemanticProperties.Description="Non lue" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NotificationsViewModel}}, Path=MarkReadCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Aucune notification -->
+        <components:EmptyState Grid.Row="2"
+                               VerticalOptions="Center"
+                               Icon="icon_bell_empty.png"
+                               Title="{Binding EmptyTitle}"
+                               Message="{Binding EmptyMessage}"
+                               IsVisible="{Binding IsEmpty}" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.VolunteerPage"
+             x:DataType="vm:VolunteerViewModel"
+             Title="Devenir bénévole"
+             SafeAreaEdges="All"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Barre du haut -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*"
+              ColumnSpacing="4"
+              Padding="14,0,20,0">
+            <ImageButton Grid.Column="0"
+                         Source="icon_arrow_left.png"
+                         Padding="10"
+                         Command="{Binding BackCommand}"
+                         SemanticProperties.Description="Retour" />
+            <Label Grid.Column="1"
+                   Text="Devenir bénévole"
+                   Style="{StaticResource TopBarTitle}" />
+        </Grid>
+
+        <!-- Contenu : defile (par exemple quand le clavier est ouvert) -->
+        <ScrollView Grid.Row="1">
+            <Grid Padding="20,10,20,20">
+
+                <!-- Formulaire -->
+                <VerticalStackLayout IsVisible="{Binding ShowForm}">
+
+                    <!-- Pastille de lieu -->
+                    <Border Style="{StaticResource LocationPillBorder}" HorizontalOptions="Start">
+                        <HorizontalStackLayout Spacing="6">
+                            <Image Source="icon_pin_dark_15.png"
+                                   WidthRequest="16"
+                                   HeightRequest="16"
+                                   VerticalOptions="Center" />
+                            <Label Text="{Binding OrphanageLine}" Style="{StaticResource LocationPillLabel}" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <!-- Domaines d'aide : choix multiple, sur deux lignes. Chaque puce a 8 de marge a droite et en bas. -->
+                    <Label Text="Domaines d'aide"
+                           Style="{StaticResource FieldLabel}"
+                           Margin="0,22,0,4" />
+                    <FlexLayout Wrap="Wrap"
+                                Direction="Row"
+                                AlignItems="Start"
+                                JustifyContent="Start"
+                                BindableLayout.ItemsSource="{Binding Domains}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ChipItem">
+                                <components:ChoiceChip Margin="0,0,4,4"
+                                                       Tight="True"
+                                                       Text="{Binding Name}"
+                                                       IsSelected="{Binding IsSelected}"
+                                                       IsError="{Binding IsError}"
+                                                       CommandParameter="{Binding .}"
+                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VolunteerViewModel}}, Path=ToggleDomainCommand}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                    <Label Text="{Binding DomainsError}"
+                           Style="{StaticResource ChipGroupError}"
+                           Margin="6,-4,0,0"
+                           IsVisible="{Binding HasDomainsError}" />
+
+                    <!-- Jours de disponibilite : choix multiple -->
+                    <Label Text="Jours de disponibilité"
+                           Style="{StaticResource FieldLabel}"
+                           Margin="0,12,0,4" />
+                    <FlexLayout Wrap="Wrap"
+                                Margin="0,0,-6,0"
+                                Direction="Row"
+                                AlignItems="Start"
+                                JustifyContent="Start"
+                                BindableLayout.ItemsSource="{Binding Days}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ChipItem">
+                                <components:ChoiceChip Margin="0,0,3,3"
+                                                       Day="True"
+                                                       Text="{Binding Name}"
+                                                       IsSelected="{Binding IsSelected}"
+                                                       IsError="{Binding IsError}"
+                                                       CommandParameter="{Binding .}"
+                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VolunteerViewModel}}, Path=ToggleDayCommand}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                    <Label Text="{Binding DaysError}"
+                           Style="{StaticResource ChipGroupError}"
+                           Margin="6,-2,0,0"
+                           IsVisible="{Binding HasDaysError}" />
+
+                    <!-- Creneau : un seul choix -->
+                    <Label Text="Créneau"
+                           Style="{StaticResource FieldLabel}"
+                           Margin="0,14,0,4" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                        <components:ChoiceChip Grid.Column="0"
+                                               Text="Matin"
+                                               IsSelected="{Binding Slots[0].IsSelected}"
+                                               CommandParameter="{Binding Slots[0]}"
+                                               Command="{Binding SelectSlotCommand}" />
+                        <components:ChoiceChip Grid.Column="1"
+                                               Text="Après-midi"
+                                               IsSelected="{Binding Slots[1].IsSelected}"
+                                               CommandParameter="{Binding Slots[1]}"
+                                               Command="{Binding SelectSlotCommand}" />
+                        <components:ChoiceChip Grid.Column="2"
+                                               Text="Soirée"
+                                               IsSelected="{Binding Slots[2].IsSelected}"
+                                               CommandParameter="{Binding Slots[2]}"
+                                               Command="{Binding SelectSlotCommand}" />
+                    </Grid>
+
+                    <!-- Motivation (facultative) avec son compteur -->
+                    <components:TextArea Margin="0,20,0,0"
+                                         Title="Votre motivation"
+                                         Placeholder="Dites en quelques mots pourquoi vous souhaitez aider"
+                                         BoxHeight="76"
+                                         MaxLength="300"
+                                         Text="{Binding Motivation}" />
+                    <Label Text="{Binding MotivationCounter}"
+                           Style="{StaticResource CharCounter}"
+                           Margin="0,2,0,0" />
+
+                    <!-- Charte de protection de l'enfant -->
+                    <components:CheckBoxField Text="Je m'engage à respecter la charte de protection de l'enfant."
+                                              IsChecked="{Binding CharterAccepted}"
+                                              ErrorMessage="{Binding CharterError}" />
+                    <Label Text="Les coordonnées de votre profil seront transmises à l'orphelinat."
+                           Style="{StaticResource CheckHintText}" />
+                </VerticalStackLayout>
+
+                <!-- Echec de l'envoi : bandeau, recapitulatif et bouton Reessayer l'envoi -->
+                <VerticalStackLayout Spacing="14"
+                                     Margin="0,4,0,0"
+                                     IsVisible="{Binding ShowFailure}">
+                    <Border Style="{StaticResource ErrorBannerBorder}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Image Grid.Column="0"
+                                   Source="icon_alert_circle.png"
+                                   WidthRequest="20"
+                                   HeightRequest="20"
+                                   VerticalOptions="Start"
+                                   Margin="0,1,0,0" />
+                            <Label Grid.Column="1"
+                                   Text="Votre candidature n'a pas pu être envoyée. Vos informations sont conservées."
+                                   Style="{StaticResource ErrorBannerText}" />
+                        </Grid>
+                    </Border>
+                    <Border Style="{StaticResource CardBorder}" Padding="14">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Request.RecapTitle}" Style="{StaticResource SectionTitle}" />
+                            <Label Text="{Binding Request.RecapSubtitle}"
+                                   Style="{StaticResource Caption}"
+                                   Margin="0,2,0,0" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </Grid>
+        </ScrollView>
+
+        <!-- Bouton du bas, fixe -->
+        <Grid Grid.Row="2" Padding="20,8,20,20">
+            <components:PrimaryButton Text="{Binding ButtonText}"
+                                      IsBusy="{Binding IsBusy}"
+                                      Command="{Binding SubmitCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

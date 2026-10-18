@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.OrphanageCard"
+             x:DataType="components:OrphanageCard"
+             x:Name="Root">
+    <!-- Petite carte d'orphelinat : photo, nom, quartier et distance, nombre d'enfants -->
+    <Border Style="{StaticResource OrphanageCardBorder}">
+        <VerticalStackLayout>
+            <Border StrokeShape="RoundRectangle 15"
+                    StrokeThickness="0"
+                    HeightRequest="96">
+                <Image Source="{Binding Orphanage.Photo, Source={x:Reference Root}}"
+                       Aspect="AspectFill"
+                       SemanticProperties.Description="{Binding Orphanage.Name, Source={x:Reference Root}}" />
+            </Border>
+            <VerticalStackLayout Padding="6,10,6,8">
+                <Label Text="{Binding Orphanage.Name, Source={x:Reference Root}}"
+                       Style="{StaticResource CardTitleSmall}" />
+                <Label Text="{Binding Orphanage.LocationText, Source={x:Reference Root}}"
+                       Style="{StaticResource CardSubtitle}"
+                       Margin="0,2,0,0" />
+                <HorizontalStackLayout Margin="0,6,0,0" Spacing="5">
+                    <Image Source="icon_pin_green.png"
+                           WidthRequest="13"
+                           HeightRequest="13"
+                           VerticalOptions="Center" />
+                    <Label Text="{Binding Orphanage.ChildrenText, Source={x:Reference Root}}"
+                           Style="{StaticResource MetaGreen}"
+                           VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Border.GestureRecognizers>
+    </Border>
+</ContentView>

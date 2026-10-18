@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.OrgNeedsPage"
+             x:DataType="vm:OrgNeedsViewModel"
+             Title="Mes besoins"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <Grid Grid.Row="0"
+              RowDefinitions="Auto,*,Auto"
+              SafeAreaEdges="Container,Container,Container,None">
+            <Label Grid.Row="0"
+                   Text="Mes besoins"
+                   Style="{StaticResource TopBarTitle}"
+                   HeightRequest="44"
+                   Margin="20,0" />
+            <!-- Liste des besoins : cartes non cliquables, sans fleche -->
+            <ScrollView Grid.Row="1" IsVisible="{Binding HasItems}">
+                <VerticalStackLayout Padding="20,12,20,16"
+                                     Spacing="12"
+                                     BindableLayout.ItemsSource="{Binding Items}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:Need">
+                            <components:NeedCard Need="{Binding .}" ShowChevron="False" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Aucun besoin publie -->
+            <components:EmptyState Grid.Row="1"
+                                   VerticalOptions="Center"
+                                   Icon="icon_archive_plus.png"
+                                   Title="Aucun besoin publié"
+                                   Message="Publiez ce dont vos enfants ont besoin pour que les donateurs puissent vous aider."
+                                   ButtonText="Publier un besoin"
+                                   Command="{Binding PublishCommand}"
+                                   IsVisible="{Binding IsEmpty}" />
+
+            <!-- Bouton du bas, fixe, au-dessus de la barre d'onglets -->
+            <Grid Grid.Row="2" Padding="20,8,20,12" IsVisible="{Binding HasItems}">
+                <components:PrimaryButton Text="Publier un besoin"
+                                          Command="{Binding PublishCommand}" />
+            </Grid>
+        </Grid>
+
+        <components:OrgTabBar Grid.Row="1" ActiveTab="Needs" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.HomePage"
+             x:DataType="vm:HomeViewModel"
+             Title="Accueil"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">
+    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <!-- Contenu : respecte la barre d'etat en haut, defile si l'ecran est petit -->
+        <Grid Grid.Row="0" SafeAreaEdges="Container,Container,Container,None">
+            <ScrollView>
+                <VerticalStackLayout Padding="0,4,0,16">
+
+                    <!-- Salutation, cloche, avatar -->
+                    <Grid ColumnDefinitions="*,Auto" Padding="20,0">
+                        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                            <Label Text="Bonjour," Style="{StaticResource GreetingSmall}" />
+                            <Label Text="{Binding GreetingName}" Style="{StaticResource Heading1}" />
+                        </VerticalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <ImageButton Source="icon_bell.png"
+                                         Padding="10"
+                                         Command="{Binding NotificationsCommand}"
+                                         SemanticProperties.Description="Notifications" />
+
+                            <Grid WidthRequest="44"
+                                  HeightRequest="44"
+                                  SemanticProperties.Description="Mon profil">
+                                <Border Style="{StaticResource AvatarSmall}" IsVisible="{Binding HasAvatarPhoto}">
+                                    <Image Source="{Binding AvatarPhoto}" Aspect="AspectFill" />
+                                </Border>
+                                <Border Style="{StaticResource AvatarInitialCircle}" IsVisible="{Binding HasNoAvatarPhoto}">
+                                    <Label Text="{Binding AvatarInitial}" Style="{StaticResource AvatarInitial}" />
+                                </Border>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToProfileCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <!-- Recherche (ouvre l'onglet Carte) -->
+                    <Border Style="{StaticResource SearchBarBorder}"
+                            Margin="20,12,20,0"
+                            SemanticProperties.Description="Rechercher un orphelinat">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Image Grid.Column="0"
+                                   Source="icon_pin_dark.png"
+                                   WidthRequest="20"
+                                   HeightRequest="20"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="Rechercher un orphelinat à Douala..."
+                                   Style="{StaticResource SearchPlaceholder}" />
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToDirectoryCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <!-- Grande carte "Besoin en cours" -->
+                    <Border Style="{StaticResource FeaturedCardBorder}" Margin="20,16,20,0">
+                        <Grid>
+                            <!-- Photo : bloc de 230 de large a droite, cadrage 68% / 25% du HTML -->
+                            <Grid WidthRequest="230"
+                                  HorizontalOptions="End"
+                                  IsClippedToBounds="True">
+                                <Image Source="child_photo.jpg"
+                                       Aspect="Fill"
+                                       WidthRequest="293.7"
+                                       HeightRequest="214"
+                                       HorizontalOptions="Start"
+                                       Margin="-43.3,0,0,0" />
+                            </Grid>
+                            <BoxView Background="{StaticResource HomeNeedCardFadeBrush}" />
+
+                            <Border Style="{StaticResource PhotoBadgeBorder}"
+                                    Margin="16,14,0,0"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start">
+                                <Label Text="Besoin en cours" Style="{StaticResource PhotoBadgeLabel}" />
+                            </Border>
+
+                            <VerticalStackLayout Margin="16,58,0,0"
+                                                 HorizontalOptions="Start"
+                                                 VerticalOptions="Start">
+                                <Label Text="{Binding FeaturedOrphanage.Name}" Style="{StaticResource FeaturedTitle}" />
+                                <HorizontalStackLayout Margin="0,6,0,0" Spacing="6">
+                                    <Image Source="icon_pin_white.png" WidthRequest="14" HeightRequest="14" VerticalOptions="Center" />
+                                    <Label Text="{Binding FeaturedLocationText}" Style="{StaticResource FeaturedMeta}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Margin="0,4,0,0" Spacing="6">
+                                    <Image Source="icon_heart_white.png" WidthRequest="14" HeightRequest="14" VerticalOptions="Center" />
+                                    <Label Text="{Binding FeaturedOrphanage.ChildrenText}" Style="{StaticResource FeaturedMeta}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <!-- Ligne du besoin -->
+                            <Border Style="{StaticResource FeaturedNeedBorder}"
+                                    Margin="12"
+                                    VerticalOptions="End">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Border Grid.Column="0"
+                                            StrokeShape="RoundRectangle 10"
+                                            StrokeThickness="0"
+                                            WidthRequest="44"
+                                            HeightRequest="44"
+                                            VerticalOptions="Center">
+                                        <Image Source="{Binding FeaturedNeed.Photo}" Aspect="AspectFill" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding FeaturedNeed.Title}" Style="{StaticResource CardTitle}" />
+                                        <Label Text="{Binding FeaturedMissingText}"
+                                               Style="{StaticResource CardSubtitle}"
+                                               Margin="0,2,0,0" />
+                                    </VerticalStackLayout>
+                                    <Image Grid.Column="2"
+                                           Source="icon_chevron_right.png"
+                                           WidthRequest="20"
+                                           HeightRequest="20"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenNeedCommand}"
+                                                  CommandParameter="{Binding FeaturedNeed}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <!-- Orphelinats pres de vous -->
+                    <Grid ColumnDefinitions="*,Auto" Margin="20,20,20,0">
+                        <Label Grid.Column="0"
+                               Text="Orphelinats près de vous"
+                               Style="{StaticResource SectionTitle}"
+                               VerticalOptions="Center" />
+                        <HorizontalStackLayout Grid.Column="1"
+                                               Spacing="2"
+                                               HeightRequest="44"
+                                               SemanticProperties.Description="Voir tout">
+                            <Label Text="Voir tout" Style="{StaticResource LinkMuted}" />
+                            <Image Source="icon_chevron_right_muted.png"
+                                   WidthRequest="14"
+                                   HeightRequest="14"
+                                   VerticalOptions="Center" />
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToDirectoryCommand}" />
+                            </HorizontalStackLayout.GestureRecognizers>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="20,0">
+                        <components:OrphanageCard Grid.Column="0"
+                                                  Orphanage="{Binding NearbyLeft}"
+                                                  Command="{Binding OpenOrphanageCommand}" />
+                        <components:OrphanageCard Grid.Column="1"
+                                                  Orphanage="{Binding NearbyRight}"
+                                                  Command="{Binding OpenOrphanageCommand}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- Barre d'onglets -->
+        <components:DonorTabBar Grid.Row="1" ActiveTab="Home" />
+    </Grid>
+</ContentPage>

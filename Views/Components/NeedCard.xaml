@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             x:Class="KindHome.Views.Components.NeedCard"
+             x:DataType="components:NeedCard"
+             x:Name="Root">
+    <!-- Carte de besoin : image, titre, orphelinat, avancement, barre et fleche -->
+    <Border Style="{StaticResource CardBorder}">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    WidthRequest="72"
+                    HeightRequest="76"
+                    VerticalOptions="Center">
+                <Grid BackgroundColor="{StaticResource IconTileBackground}">
+                    <Image Source="{Binding Need.Photo, Source={x:Reference Root}}"
+                           Aspect="AspectFill"
+                           IsVisible="{Binding Need.HasPhoto, Source={x:Reference Root}}" />
+                    <Image Source="icon_archive.png"
+                           WidthRequest="30"
+                           HeightRequest="30"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding Need.HasNoPhoto, Source={x:Reference Root}}" />
+                </Grid>
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label Text="{Binding Need.Title, Source={x:Reference Root}}" Style="{StaticResource CardTitle}" />
+                <Label Text="{Binding Need.Orphanage.Name, Source={x:Reference Root}}"
+                       Style="{StaticResource CardSubtitle}"
+                       Margin="0,2,0,0" />
+                <Label Text="{Binding Need.ProgressText, Source={x:Reference Root}}"
+                       Style="{StaticResource CardSubtitle}"
+                       Margin="0,8,0,0" />
+                <components:NeedProgressBar Progress="{Binding Need.Progress, Source={x:Reference Root}}"
+                                            Size="Small"
+                                            Margin="0,6,0,0" />
+            </VerticalStackLayout>
+            <Image Grid.Column="2"
+                   Source="icon_chevron_right.png"
+                   WidthRequest="20"
+                   HeightRequest="20"
+                   VerticalOptions="Center"
+                   IsVisible="{Binding ShowChevron, Source={x:Reference Root}}" />
+        </Grid>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnTapped" />
+        </Border.GestureRecognizers>
+    </Border>
+</ContentView>

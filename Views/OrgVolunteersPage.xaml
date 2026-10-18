@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:KindHome.Views.Components"
+             xmlns:models="clr-namespace:KindHome.Models"
+             xmlns:vm="clr-namespace:KindHome.ViewModels"
+             x:Class="KindHome.Views.OrgVolunteersPage"
+             x:DataType="vm:OrgVolunteersViewModel"
+             Title="Demandes de bénévolat"
+             SafeAreaEdges="None"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource PageBackground}">    <Grid RowDefinitions="*,Auto" SafeAreaEdges="None">
+
+        <Grid Grid.Row="0"
+              RowDefinitions="Auto,*"
+              SafeAreaEdges="Container,Container,Container,None">
+            <Label Grid.Row="0"
+                   Text="Demandes de bénévolat"
+                   Style="{StaticResource TopBarTitle}"
+                   HeightRequest="44"
+                   Margin="20,0" />
+            <ScrollView Grid.Row="1" IsVisible="{Binding HasItems}">
+                <VerticalStackLayout Padding="20,12,20,16"
+                                     Spacing="12"
+                                     BindableLayout.ItemsSource="{Binding Items}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:OrgRequestItem">
+                            <Grid>
+                                <Border Style="{StaticResource CardBorder}" />
+                                <VerticalStackLayout Padding="14">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                        <Border Grid.Column="0"
+                                                Style="{StaticResource AvatarInitialCircle}"
+                                                VerticalOptions="Start">
+                                            <Label Text="{Binding Initial}" Style="{StaticResource AvatarInitial}" />
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" Style="{StaticResource CardTitle}" />
+                                            <Label Text="{Binding Domain}"
+                                                   Style="{StaticResource CardSubtitle}"
+                                                   Margin="0,2,0,0" />
+                                            <Label Text="{Binding Schedule}"
+                                                   Style="{StaticResource CardSubtitle}"
+                                                   Margin="0,2,0,0" />
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="2"
+                                                Style="{StaticResource TagBorder}"
+                                                VerticalOptions="Start">
+                                            <Label Text="{Binding Status}" Style="{StaticResource TagLabel}" />
+                                        </Border>
+                                    </Grid>
+                                    <Grid ColumnDefinitions="*,*"
+                                          ColumnSpacing="10"
+                                          Margin="0,12,0,0"
+                                          IsVisible="{Binding IsPending}">
+                                        <components:PrimaryButton Grid.Column="0"
+                                                                  Text="Accepter"
+                                                                  Compact="True"
+                                                                  CommandParameter="{Binding .}"
+                                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrgVolunteersViewModel}}, Path=AcceptCommand}" />
+                                        <components:SecondaryButton Grid.Column="1"
+                                                                    Text="Refuser"
+                                                                    Compact="True"
+                                                                    CommandParameter="{Binding .}"
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrgVolunteersViewModel}}, Path=RefuseCommand}" />
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <components:EmptyState Grid.Row="1"
+                                   VerticalOptions="Center"
+                                   Icon="icon_people_empty.png"
+                                   Title="Aucune demande pour l'instant"
+                                   Message="Les candidatures des bénévoles apparaîtront ici."
+                                   IsVisible="{Binding IsEmpty}" />
+        </Grid>
+
+        <components:OrgTabBar Grid.Row="1" ActiveTab="Volunteers" />
+    </Grid>
+</ContentPage>
