@@ -66,7 +66,7 @@ public static class OrgService
 
             string amount;
             if (row.IsFinancial)
-                amount = row.Amount.ToString("N0", French).Replace('\u202f', ' ').Replace('\u00a0', ' ') + " FCFA";
+                amount = row.Amount.ToString("N0", French).Replace(' ', ' ').Replace(' ', ' ') + " FCFA";
             else
                 amount = (row.Quantity + " " + need.Unit).Trim();
 
@@ -96,22 +96,62 @@ public static class OrgService
             .CountAsync();
     }
 
-    // Accepter ou refuser une candidature
+    // Accepter ou refuser une candidature (le benevole est prevenu)
     public static async Task SetRequestStatusAsync(int id, string status)
     {
         await PrepareAsync();
         int changed = await AppDb.Db.ExecuteAsync("UPDATE VolunteerRow SET Status = ? WHERE Id = ?", status, id);
         if (changed == 0)
             throw new InvalidOperationException("Candidature introuvable");
+
+        // Le statut est enregistre : la notification est secondaire et ne doit pas annuler le changement
+        try
+        {
+            var row = await AppDb.Db.Table<VolunteerRow>().Where(r => r.Id == id).FirstOrDefaultAsync();
+            if (row == null) return;
+
+            string domains = row.Domains.Replace("|", ", ");
+
+            if (status == "Acceptée")
+            {
+                await NotificationService.AddAsync(row.UserEmail, "Candidature acceptée",
+                    row.OrphanageName + " a accepté votre candidature : " + domains + ".", "icon_people_20.png");
+            }
+            else if (status == "Refusée")
+            {
+                await NotificationService.AddAsync(row.UserEmail, "Candidature refusée",
+                    row.OrphanageName + " n'a pas pu retenir votre candidature : " + domains + ".", "icon_alert_circle.png");
+            }
+        }
+        catch (Exception)
+        {
+            // La notification est secondaire : on ignore l'echec
+        }
     }
 
-    // Confirmer la remise d'un don
+    // Confirmer la remise d'un don (le donateur est prevenu)
     public static async Task SetDonationStatusAsync(int id, string status)
     {
         await PrepareAsync();
         int changed = await AppDb.Db.ExecuteAsync("UPDATE DonationRow SET Status = ? WHERE Id = ?", status, id);
         if (changed == 0)
             throw new InvalidOperationException("Don introuvable");
+
+        if (status != "Remis") return;
+
+        // Le statut est enregistre : la notification est secondaire et ne doit pas annuler le changement
+        try
+        {
+            var row = await AppDb.Db.Table<DonationRow>().Where(r => r.Id == id).FirstOrDefaultAsync();
+            if (row == null) return;
+
+            await NotificationService.AddAsync(row.UserEmail, "Don remis",
+                row.OrphanageName + " a confirmé la remise de votre don : " + row.NeedTitle + ".", "icon_check_circle.png");
+        }
+        catch (Exception)
+        {
+            // La notification est secondaire : on ignore l'echec
+        }
     }
 
     // Nom du donateur : comptes d'exemple, puis comptes de la base (vide pour un invite)

@@ -30,5 +30,8 @@ public static class ContactService
         };
 
         await AppDb.Db.InsertAsync(row);
+
+        // L'organisation est prevenue (cette notification ne peut pas faire echouer l'envoi)
+        await NotificationService.NotifyNewContactAsync(orphanage.Name, userEmail, subject, message);
     }
 }

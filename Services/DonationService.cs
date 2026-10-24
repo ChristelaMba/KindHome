@@ -57,5 +57,8 @@ public static class DonationService
         });
 
         need.Collected = newValue;
+
+        // L'organisation est prevenue (cette notification ne peut pas faire echouer le don)
+        await NotificationService.NotifyNewDonationAsync(need.Orphanage.Name, need.Title, donation.AmountText, userEmail);
     }
 }

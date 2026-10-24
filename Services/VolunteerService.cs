@@ -41,5 +41,8 @@ public static class VolunteerService
         };
 
         await AppDb.Db.InsertAsync(row);
+
+        // L'organisation est prevenue (cette notification ne peut pas faire echouer la candidature)
+        await NotificationService.NotifyNewVolunteerAsync(request.Orphanage.Name, userName, string.Join(", ", request.Domains));
     }
 }
