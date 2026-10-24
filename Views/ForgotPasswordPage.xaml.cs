@@ -16,8 +16,21 @@ public partial class ForgotPasswordPage : ContentPage
         Scroller.SizeChanged += (s, e) => ContentGrid.MinimumHeightRequest = Scroller.Height;
     }
 
-    void OnEmailCompleted(object? sender, EventArgs e)
+    // Entree dans l'e-mail : on passe au telephone
+    void OnEmailCompleted(object? sender, EventArgs e) => PhoneField.FocusInput();
+
+    // Entree dans le telephone : on lance la verification
+    void OnPhoneCompleted(object? sender, EventArgs e)
     {
-        viewModel.SendCommand.Execute(null);
+        viewModel.CheckCommand.Execute(null);
+    }
+
+    // Entree dans le nouveau mot de passe : on passe a la confirmation
+    void OnNewPasswordCompleted(object? sender, EventArgs e) => ConfirmField.FocusInput();
+
+    // Entree dans la confirmation : on lance le changement
+    void OnConfirmCompleted(object? sender, EventArgs e)
+    {
+        viewModel.ResetCommand.Execute(null);
     }
 }

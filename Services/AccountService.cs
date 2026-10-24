@@ -3,6 +3,14 @@ using KindHome.Models;
 
 namespace KindHome.Services;
 
+// Resultat de la verification e-mail + telephone
+public enum ResetCheck
+{
+    Ok,
+    NotFound,
+    SampleAccount
+}
+
 public static class AccountService
 {
     static bool tableReady;
@@ -94,5 +102,54 @@ public static class AccountService
 
         MockData.Accounts.Add(account);
         return account;
+    }
+
+    // Garde seulement les chiffres du telephone, sans le +237 : "+237 6 12 34 56 78" donne "612345678"
+    public static string NormalizePhone(string phone)
+    {
+        string digits = new string(phone.Where(char.IsDigit).ToArray());
+        if (digits.Length == 12 && digits.StartsWith("237"))
+            digits = digits.Substring(3);
+        return digits;
+    }
+
+    // Verifie que l'e-mail et le telephone correspondent a un meme compte
+    // (meme resultat NotFound pour un e-mail inconnu et pour un mauvais telephone)
+    public static async Task<ResetCheck> CheckIdentityAsync(string email, string phone)
+    {
+        string mail = email.Trim().ToLower();
+        string digits = NormalizePhone(phone);
+        if (mail.Length == 0 || digits.Length == 0)
+            return ResetCheck.NotFound;
+
+        // Comptes d'exemple (mot de passe ecrit dans le code) : on ne peut pas le changer
+        var sample = MockData.Accounts.FirstOrDefault(a => a.Password.Length > 0 && a.Email.Trim().ToLower() == mail);
+        if (sample != null)
+            return NormalizePhone(sample.Phone) == digits ? ResetCheck.SampleAccount : ResetCheck.NotFound;
+
+        await PrepareAsync();
+
+        var row = await AppDb.Db.Table<AccountRow>().Where(r => r.Email == mail).FirstOrDefaultAsync();
+        if (row == null)
+            return ResetCheck.NotFound;
+
+        return NormalizePhone(row.Phone) == digits ? ResetCheck.Ok : ResetCheck.NotFound;
+    }
+
+    // Change le mot de passe (l'identite est verifiee une deuxieme fois)
+    public static async Task ResetPasswordAsync(string email, string phone, string newPassword)
+    {
+        var check = await CheckIdentityAsync(email, phone);
+        if (check != ResetCheck.Ok)
+            throw new InvalidOperationException("Identite non verifiee");
+
+        string mail = email.Trim().ToLower();
+        var row = await AppDb.Db.Table<AccountRow>().Where(r => r.Email == mail).FirstOrDefaultAsync();
+        if (row == null)
+            throw new InvalidOperationException("Compte introuvable");
+
+        string hash = await Task.Run(() => PasswordHasher.Hash(newPassword));
+        row.Password = hash;
+        await AppDb.Db.UpdateAsync(row);
     }
 }
