@@ -12,10 +12,11 @@ public partial class ProfilePage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         // La personne connectee peut avoir change depuis la derniere fois
         viewModel.Refresh();
+        await viewModel.LoadCountsAsync();
     }
 }

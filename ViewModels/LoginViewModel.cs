@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using KindHome.Data;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -18,6 +19,7 @@ public class LoginViewModel : BaseViewModel
     string buttonText = LoginText;
     bool submitted;
     bool wrongCredentials;
+    bool isBusy;
 
     public LoginViewModel()
     {
@@ -102,23 +104,39 @@ public class LoginViewModel : BaseViewModel
 
     async Task LoginAsync()
     {
+        // Pas de deuxieme connexion pendant que la premiere est en cours
+        if (isBusy) return;
+
         submitted = true;
         bool emailOk = ValidateEmail();
         bool passwordOk = ValidatePassword();
         if (!emailOk || !passwordOk) return;
 
-        var account = MockData.FindAccount(Email, Password);
-        if (account == null)
+        isBusy = true;
+        try
         {
-            wrongCredentials = true;
-            PasswordError = "Mot de passe incorrect. Vérifiez-le ou réinitialisez-le.";
-            ButtonText = RetryText;
-            return;
-        }
+            // Cherche le compte dans MockData, puis dans la base SQLite
+            var account = await AccountService.FindAsync(Email, Password);
+            if (account == null)
+            {
+                wrongCredentials = true;
+                PasswordError = "Mot de passe incorrect. Vérifiez-le ou réinitialisez-le.";
+                ButtonText = RetryText;
+                return;
+            }
 
-        UserSession.SignIn(account);
-        string route = account.Role == UserRole.Organization ? nameof(OrgDashboardPage) : nameof(HomePage);
-        await Shell.Current.GoToAsync("//" + route);
+            UserSession.SignIn(account);
+            string route = account.Role == UserRole.Organization ? nameof(OrgDashboardPage) : nameof(HomePage);
+            await Shell.Current.GoToAsync("//" + route);
+        }
+        catch (Exception)
+        {
+            await Shell.Current.DisplayAlertAsync("Erreur", "La connexion a échoué. Réessayez.", "OK");
+        }
+        finally
+        {
+            isBusy = false;
+        }
     }
 
     async Task GuestAsync()

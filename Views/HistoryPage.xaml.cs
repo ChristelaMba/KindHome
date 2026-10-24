@@ -24,4 +24,11 @@ public partial class HistoryPage : ContentPage
             viewModel.ShowDonations = value != "Missions";
         }
     }
+
+    // A chaque ouverture, l'historique est relu dans la base
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await viewModel.LoadAsync();
+    }
 }

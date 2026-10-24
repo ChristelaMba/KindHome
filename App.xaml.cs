@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using KindHome.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KindHome
 {
@@ -9,6 +10,9 @@ namespace KindHome
             InitializeComponent();
             // Theme clair uniquement, comme la maquette
             UserAppTheme = AppTheme.Light;
+
+            // Charge les besoins depuis la base avant l'ouverture des pages
+            Task.Run(() => NeedService.LoadAsync()).GetAwaiter().GetResult();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

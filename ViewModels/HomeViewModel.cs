@@ -58,9 +58,19 @@ public class HomeViewModel : BaseViewModel
     public Need FeaturedNeed => MockData.FeaturedNeed;
     public Orphanage FeaturedOrphanage => MockData.FeaturedNeed.Orphanage;
 
-    // Textes de la grande carte, comme sur la maquette ("Douala" et non "Bonapriso", "Il manque 12 unites")
+    // Textes de la grande carte ("Douala" et non "Bonapriso")
     public string FeaturedLocationText => "Douala - " + FeaturedOrphanage.DistanceText;
-    public string FeaturedMissingText => "Il manque 12 unités";
+
+    // Le reste a couvrir est calcule avec le compteur du besoin
+    public string FeaturedMissingText
+    {
+        get
+        {
+            var need = FeaturedNeed;
+            if (need.Remaining <= 0) return "Besoin couvert";
+            return "Il manque " + need.Remaining + " " + need.Unit;
+        }
+    }
 
     public Orphanage NearbyLeft => MockData.NearbyOnHome[0];
     public Orphanage NearbyRight => MockData.NearbyOnHome[1];
@@ -73,6 +83,10 @@ public class HomeViewModel : BaseViewModel
         GreetingName = name;
         AvatarPhoto = user?.Photo ?? "";
         AvatarInitial = name.Length > 0 ? name.Substring(0, 1).ToUpper() : "";
+
+        // Le compteur du besoin a pu changer apres un don : la carte relit ses valeurs
+        OnPropertyChanged(nameof(FeaturedNeed));
+        OnPropertyChanged(nameof(FeaturedMissingText));
     }
 
     static async Task OpenNeedAsync(Need? need)

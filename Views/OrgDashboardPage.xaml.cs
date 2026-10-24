@@ -12,10 +12,11 @@ public partial class OrgDashboardPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         // L'organisation connectee peut avoir change depuis la derniere fois
         viewModel.Refresh();
+        await viewModel.LoadPendingAsync();
     }
 }

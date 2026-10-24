@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using KindHome.Data;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -160,14 +161,14 @@ public class PublishNeedViewModel : BaseViewModel
         bool unitOk = ValidateUnit();
         if (!titleOk || !categoryOk || !quantityOk || !unitOk) return;
 
-        // Envoi simule : rien n'est envoye nulle part
+        // Le bouton reste bloque jusqu'a la fin de l'enregistrement (pas de double publication)
         IsBusy = true;
         ButtonText = BusyText;
         await Task.Delay(1000);
-        IsBusy = false;
 
         if (DebugFlags.SimulateSendFailure)
         {
+            IsBusy = false;
             ShowFailure = true;
             ButtonText = RetryText;
             return;
@@ -176,7 +177,8 @@ public class PublishNeedViewModel : BaseViewModel
         var user = UserSession.CurrentUser;
         var orphanage = MockData.Orphanages.FirstOrDefault(o => o.Name == user?.FullName)
             ?? new Orphanage { Name = user?.FullName ?? "" };
-        UserSession.PublishedNeeds.Insert(0, new Need
+
+        var need = new Need
         {
             Title = title.Trim(),
             Orphanage = orphanage,
@@ -185,8 +187,23 @@ public class PublishNeedViewModel : BaseViewModel
             Unit = unit.Trim(),
             Category = Categories.First(c => c.IsSelected).Name,
             WhyImportant = why
-        });
+        };
 
+        try
+        {
+            // Le besoin est enregistre dans la base (il reste apres la fermeture de l'app)
+            await NeedService.AddAsync(need);
+        }
+        catch
+        {
+            // Echec de l'enregistrement : on affiche l'etat d'echec existant
+            IsBusy = false;
+            ShowFailure = true;
+            ButtonText = RetryText;
+            return;
+        }
+
+        IsBusy = false;
         ShowFailure = false;
         await Shell.Current.DisplayAlertAsync("Besoin publié", "Les donateurs peuvent maintenant le voir.", "OK");
 

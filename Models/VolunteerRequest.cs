@@ -5,8 +5,11 @@ public class VolunteerRequest
 {
     static readonly string[] DayNames = { "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche" };
 
+    // Orphelinat vide, utilise tant que la candidature n'a pas de besoin
+    static readonly Orphanage EmptyOrphanage = new();
+
     public Need Need { get; set; } = null!;
-    public Orphanage Orphanage => Need.Orphanage;
+    public Orphanage Orphanage => Need?.Orphanage ?? EmptyOrphanage;
 
     // Domaines choisis, dans l'ordre des puces
     public List<string> Domains { get; set; } = new();

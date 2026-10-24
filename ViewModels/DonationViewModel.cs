@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using KindHome.Data;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -238,7 +239,6 @@ public class DonationViewModel : BaseViewModel
             };
         }
 
-        // Envoi simule : rien n'est envoye nulle part
         IsBusy = true;
         ButtonText = BusyText;
         await Task.Delay(1000);
@@ -251,9 +251,22 @@ public class DonationViewModel : BaseViewModel
             return;
         }
 
-        // Le don rejoint l'historique de la session (une seule fois)
+        // Le don est enregistre dans la base, puis rejoint l'historique de la session (une seule fois)
         if (!recorded)
         {
+            try
+            {
+                await DonationService.SaveAsync(donation, UserSession.CurrentUser?.Email ?? "");
+            }
+            catch (Exception)
+            {
+                // Echec de l'enregistrement : on affiche l'etat d'echec existant
+                IsBusy = false;
+                ShowFailure = true;
+                ButtonText = RetryText;
+                return;
+            }
+
             recorded = true;
             UserSession.AddDonation(donation);
         }

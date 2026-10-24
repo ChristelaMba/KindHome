@@ -12,10 +12,10 @@ public partial class OrgDonationsPage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        // L'organisation connectee peut avoir change
-        viewModel.Refresh();
+        // L'organisation connectee peut avoir change, et de nouveaux dons ont pu arriver
+        await viewModel.RefreshAsync();
     }
 }

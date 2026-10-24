@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using KindHome.Data;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -19,6 +20,7 @@ public class RegisterViewModel : BaseViewModel
     bool acceptedTerms;
     bool termsWasChecked;
     bool isBusy;
+    bool emailTaken;
     string buttonText = CreateText;
 
     // Un champ affiche son erreur seulement apres avoir ete quitte une premiere fois
@@ -74,7 +76,13 @@ public class RegisterViewModel : BaseViewModel
     public string Email
     {
         get => email;
-        set { if (SetProperty(ref email, value)) RefreshEmail(); }
+        set
+        {
+            if (!SetProperty(ref email, value)) return;
+            // Si la personne change l'e-mail, l'erreur "deja utilise" disparait
+            emailTaken = false;
+            RefreshEmail();
+        }
     }
 
     public string Phone
@@ -136,6 +144,7 @@ public class RegisterViewModel : BaseViewModel
         string value = email.Trim();
         if (value.Length == 0) return "Adresse e-mail obligatoire";
         if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$")) return "Adresse e-mail invalide. Exemple : nom@mail.com";
+        if (emailTaken) return "Cette adresse e-mail est déjà utilisée";
         return "";
     }
 
@@ -186,10 +195,20 @@ public class RegisterViewModel : BaseViewModel
     {
         if (IsBusy || !CanSubmit) return;
 
-        // Envoi simule : rien n'est envoye nulle part
         IsBusy = true;
         ButtonText = BusyText;
         await Task.Delay(1000);
+
+        // Un seul compte par adresse e-mail
+        if (await AccountService.EmailExistsAsync(email))
+        {
+            emailTaken = true;
+            emailTouched = true;
+            RefreshEmail();
+            IsBusy = false;
+            ButtonText = CreateText;
+            return;
+        }
 
         var account = new UserAccount
         {
@@ -199,6 +218,7 @@ public class RegisterViewModel : BaseViewModel
             Password = password,
             Role = role
         };
+        await AccountService.SaveAsync(account);
         MockData.Accounts.Add(account);
         UserSession.SignIn(account);
 

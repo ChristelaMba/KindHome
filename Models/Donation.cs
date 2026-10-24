@@ -7,7 +7,8 @@ public class Donation
 {
     static readonly CultureInfo French = new("fr-FR");
 
-    public Need Need { get; set; } = null!;
+    // Besoin vide tant que le don n'est pas rempli (evite les erreurs a l'ouverture du formulaire)
+    public Need Need { get; set; } = new() { Orphanage = new Orphanage() };
 
     // false : don en nature (Quantity) ; true : don financier (Amount en FCFA)
     public bool IsFinancial { get; set; }
@@ -20,7 +21,7 @@ public class Donation
     public DateTime Date { get; set; }
     public string Message { get; set; } = "";
 
-    // "Quantite" ou "Montant"
+    // "Quantité" ou "Montant"
     public string AmountLabel => IsFinancial ? "Montant" : "Quantité";
 
     // "4 unités" ou "10 000 FCFA"

@@ -73,13 +73,15 @@ public static class UserSession
         });
     }
 
-    // Besoins de l'organisation connectee : publies d'abord, puis ceux de depart (le drapeau SimulateNoOrgNeeds ne masque que ceux de depart)
+    // Besoins de l'organisation connectee, lus dans la liste des besoins (le plus recent en premier)
     public static List<Need> OrgNeeds()
     {
-        var list = new List<Need>(PublishedNeeds);
         var user = CurrentUser;
-        if (user?.Organization != null && !DebugFlags.SimulateNoOrgNeeds)
-            list.AddRange(MockData.Needs.Where(n => n.Orphanage.Name == user.FullName));
+        if (user == null || user.Role != UserRole.Organization || DebugFlags.SimulateNoOrgNeeds)
+            return new List<Need>();
+
+        var list = MockData.Needs.Where(n => n.Orphanage.Name == user.FullName).ToList();
+        list.Reverse();
         return list;
     }
 

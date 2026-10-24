@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -19,6 +20,10 @@ public class ProfileViewModel : BaseViewModel
     string impactAfter = "";
     string buttonText = "";
     bool isGuest;
+
+    // Chiffres de depart du profil (exemple), avant d'ajouter les dons et missions reels
+    int baseDonations;
+    int baseMissions;
 
     public ProfileViewModel()
     {
@@ -105,12 +110,33 @@ public class ProfileViewModel : BaseViewModel
         Initial = first.Length > 0 ? first.Substring(0, 1).ToUpper() : "";
     }
 
-    // Les dons et candidatures envoyes pendant la session s'ajoutent aux chiffres
+    // Au depart, les envois de la session s'ajoutent aux chiffres (invite, ou lecture de la base pas encore finie)
     void SetCounts(int donations, int missions, int followed)
     {
+        baseDonations = donations;
+        baseMissions = missions;
         DonationsCount = donations + UserSession.SessionDonations.Count;
         MissionsCount = missions + UserSession.SessionMissions.Count;
         FollowedCount = followed;
+    }
+
+    // Pour une personne connectee : les chiffres comptent les vraies lignes de la base
+    public async Task LoadCountsAsync()
+    {
+        var user = UserSession.CurrentUser;
+        if (user == null || user.Email.Length == 0) return;
+
+        try
+        {
+            int donations = await HistoryService.CountDonationsAsync(user.Email);
+            int missions = await HistoryService.CountMissionsAsync(user.Email);
+            DonationsCount = baseDonations + donations;
+            MissionsCount = baseMissions + missions;
+        }
+        catch (Exception)
+        {
+            // Lecture impossible : on garde les chiffres affiches
+        }
     }
 
     void SetImpact(string before, string bold, string after)

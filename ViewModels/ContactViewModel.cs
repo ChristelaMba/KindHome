@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using KindHome.Data;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -120,7 +121,6 @@ public class ContactViewModel : BaseViewModel
         submitted = true;
         if (!ValidateMessage()) return;
 
-        // Envoi simule : rien n'est envoye nulle part
         IsBusy = true;
         ButtonText = BusyText;
         await Task.Delay(1000);
@@ -133,6 +133,21 @@ public class ContactViewModel : BaseViewModel
             return;
         }
 
+        try
+        {
+            // Le message est enregistre dans la base
+            await ContactService.SaveAsync(orphanage, subject, message, UserSession.CurrentUser?.Email ?? "");
+        }
+        catch (Exception)
+        {
+            // Echec de l'enregistrement : on affiche l'etat d'echec existant
+            IsBusy = false;
+            ShowFailure = true;
+            ButtonText = RetryText;
+            return;
+        }
+
+        IsBusy = false;
         ShowFailure = false;
 
         // "Le Centre d'Espoir vous repondra rapidement." (pluriel : "Les Petits Cœurs vous repondront rapidement.")

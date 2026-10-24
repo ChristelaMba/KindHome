@@ -1,6 +1,7 @@
 using System.Windows.Input;
 using KindHome.Data;
 using KindHome.Models;
+using KindHome.Services;
 using KindHome.Views;
 
 namespace KindHome.ViewModels;
@@ -82,13 +83,44 @@ public class OrgDashboardViewModel : BaseViewModel
         HasOrgData = summary != null;
 
         VolunteerTitle = summary?.VolunteerRequestTitle ?? "";
-        // Demandes encore en attente
+        // Demandes encore en attente (donnees d'exemple ; LoadPendingAsync ajoute celles de la base)
         int pending = user?.OrgRequests.Count(r => r.Status == "En attente") ?? 0;
-        VolunteerSubtitle = summary == null ? "" : pending == 0 ? "Aucune demande en attente" : pending == 1 ? "1 demande" : pending + " demandes";
+        VolunteerSubtitle = summary == null ? "" : PendingText(pending);
 
         LastDonationNeed = summary?.LastDonationNeed;
         LastDonationSubtitle = summary?.LastDonationNeed == null
             ? ""
             : summary.LastDonationQuantity + " " + summary.LastDonationNeed.Unit;
+    }
+
+    // Ajoute les candidatures de la base au nombre de demandes en attente
+    public async Task LoadPendingAsync()
+    {
+        var user = UserSession.CurrentUser;
+        if (user == null || user.Role != UserRole.Organization || user.Organization == null) return;
+
+        int dbPending;
+        try
+        {
+            dbPending = await OrgService.CountPendingRequestsAsync(user.FullName);
+        }
+        catch (Exception)
+        {
+            // Lecture impossible : on garde le texte affiche
+            return;
+        }
+
+        // La personne connectee a change pendant la lecture : on ignore le resultat
+        if (UserSession.CurrentUser != user) return;
+
+        int pending = dbPending + user.OrgRequests.Count(r => r.Status == "En attente");
+        VolunteerSubtitle = PendingText(pending);
+    }
+
+    static string PendingText(int pending)
+    {
+        if (pending == 0) return "Aucune demande en attente";
+        if (pending == 1) return "1 demande";
+        return pending + " demandes";
     }
 }

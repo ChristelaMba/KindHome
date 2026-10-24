@@ -2,6 +2,9 @@ namespace KindHome.Models;
 
 public class Need
 {
+    // Numero du besoin dans la base (0 tant qu'il n'est pas enregistre)
+    public int Id { get; set; }
+
     public string Title { get; set; } = "";
     public Orphanage Orphanage { get; set; } = null!;
     public int Collected { get; set; }
