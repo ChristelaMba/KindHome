@@ -84,6 +84,17 @@ public class LoginViewModel : BaseViewModel
         ButtonText = LoginText;
     }
 
+    // Vide le mot de passe et les messages (appelee a chaque affichage de la page)
+    public void ClearPassword()
+    {
+        submitted = false;
+        wrongCredentials = false;
+        Password = "";
+        EmailError = "";
+        PasswordError = "";
+        ButtonText = LoginText;
+    }
+
     bool ValidateEmail()
     {
         string value = Email.Trim();

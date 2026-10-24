@@ -16,6 +16,13 @@ public partial class LoginPage : ContentPage
         Scroller.SizeChanged += (s, e) => ContentGrid.MinimumHeightRequest = Scroller.Height;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Le mot de passe saisi avant ne doit pas rester dans le champ
+        viewModel.ClearPassword();
+    }
+
     void OnPasswordCompleted(object? sender, EventArgs e)
     {
         viewModel.LoginCommand.Execute(null);
